@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Techside | Cadastro</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/cadastro_login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+    <link rel="icon" href="./assets/img/TechSide.png">
+</head>
+
+<body>
+    <div class="header">
+        <div class="container">
+            <img id="logo" src="./assets/img/logofrost.svg" alt="" height="50" width="200">
+            <ul class="navbar">
+                <a class="lista" href="index.html">
+                    <i class="fa-solid fa-house"></i>
+                </a>
+                <a class="lista" href="calculadoraFinanceira.html">
+                    <i class="fa-solid fa-calculator"></i>
+                </a>
+                <a class="lista" href="cadastro.html">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                </a>
+                <a class="lista" href="login.html">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+            </ul>
+        </div>
+    </div>
+    <div class="div_formulario">
+        <span><img src="./assets/img/projetos.png" width="600px"></span>
+        <div class="container">
+            <div class="formulario" id="div_form">
+                <h4 class="titulo">Cadastre sua empresa</h4>
+                <h4 class="text_input">Nome da empresa</h4>
+                <input class="inputs_cadastro" value="Brandão Vacinas" id="input_nome_empresa">
+                <h4 class="text_input">CNPJ</h4>
+                <input class="inputs_cadastro" value="52.246.319/0001-03" onkeyup="validar_cnpj(this.value)" id="input_cnpj">
+                <button class="button_form" onclick="validar_campos(input_nome_empresa.value, input_cnpj.value)">Cadastrar-se</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="container">
+            <img width="300px" src="./assets/img/logofrost.svg">
+            <span>CopyRight @ TechSide 2023</span>
+            <div class="listaFooter">
+                <a class="lista itemFooter" href="https://github.com/T3chSide"><i class="fa-brands fa-github"
+                        style="background-color: #000000;"></i></a>
+                <a class="lista itemFooter" href="https://github.com/T3chSide"><i class="fa-brands fa-twitter"
+                        style="color: #ffffff; background-color: #000000;"></i></a>
+                <a class="lista itemFooter" href="https://github.com/T3chSide"><i class="fa-brands fa-instagram"
+                        style="background-color: #000000;"></i></a>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+<script src="./js/cnpj.js"></script>
+<script src="./js/cadastrar_empresa.js"></script>
+<script src="./js/funcoes.js"></script>
+
+<script>
+    function validar_campos(nome, cnpj) {
+        if (nome == "" || cnpj == "") {
+            alert("Todos os campos são obrigatórios!");
+            return false;
+        } else {
+            if (validar_cnpj(cnpj)) {
+                procurar_cnpj(cnpj);
+            } else {
+                input_cnpj.style.borderColor = 'red';
+                return false;
+            }
+        }
+    }
+
+</script>

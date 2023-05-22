@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechSide | Calculadora Financeira</title>
+    <link rel="stylesheet" href="./css/style_calc.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+    <link rel="icon" href="./assets/img/TechSide.png">
+</head>
+
+<body>
+    <div class="header">
+        <div class="container">
+            <img id="logo" src="./assets/img/logofrost.svg" alt="" height="50" width="200">
+            <ul class="navbar">
+                <a class="lista" href="index.html">
+                    <i class="fa-solid fa-house"></i>
+                </a>
+                <a class="lista" href="calculadora_financeira.html">
+                    <i class="fa-solid fa-calculator"></i>
+                </a>
+                <a class="lista" href="cadastro.html">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                </a>
+                <a class="lista" href="login.html">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="calculadora">
+        <div class="section_mensagens">
+            <div id="mensagem" class="hide">
+                <p>Preço total dos lotes: <span class="destaque">R$100</span></p>
+
+            <p>Com a solução FrostSide o valor poupado será de: <span class="destaque marcado">R$100</span></p>
+            </div>
+        </div>
+        <!-- <span class="imagem_calculadora"><img src="./assets/img/financeiro.png"></span> -->
+        <div class="container" id="container_calculadora">
+            <div class="inputs" id="div_calculadora">
+                <h4 class="titulo">Calculadora Financeira</h1>
+                    <span class="text_input">Informe a quantidade de lotes </span><input id="input_lotes">
+                    <span class="text_input">Informe quantas vacinas foram transportadas (por lote) </span><input id="input_vacinas">
+                    <span class="text_input">Informe o preço unitário da vacina</span> <input id="input_preco_vacina">
+                    <button class="botao_calculadora" onclick="calcular()">Calcular</button>
+            </div>
+        </div>
+        <br><br>
+        <div id="div_resultado"></div>
+
+    </div>
+    <div class="footer">
+        <div class="container">
+            <img width="300px" src="./assets/img/logofrost.svg" alt="">
+            <span>CopyRight @ TechSide 2023</span>
+            <div class="listaFooter">
+                <a class="lista itemFooter" href="https://github.com/T3chSide"><i class="fa-brands fa-github"
+                        style="background-color: #000000;"></i></a>
+                <a class="lista itemFooter" href="https://github.com/T3chSide"><i class="fa-brands fa-twitter"
+                        style="color: #ffffff; background-color: #000000;"></i></a>
+                <a class="lista itemFooter" href="https://github.com/T3chSide"><i class="fa-brands fa-instagram"
+                        style="background-color: #000000;"></i></a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    var mensagem_ativa = false;
+    function calcular() {
+
+
+        //vacinas_valor_unitario
+        //qts lotes
+        //qtde vacinas
+        //preco do lote = vacinas_valor_unitario * qtdeVacinas
+        // perda = preco lote * 0.5
+        // economia = perda * 0.55 
+
+        // colocar na mesma div que a calculadora
+        // botao pra simular de novo
+
+
+        /*ideias
+        -é necessário colocar as vacinas?
+        -preço por vacina ao inves do lote?
+        -*/
+
+
+        //var empresa = input_nome_empresa.value;
+        var vacinas = Number(input_vacinas.value)
+        var lotes = Number(input_lotes.value);
+        var preco_vacinas = Number(input_preco_vacina.value);
+
+        var preco_lote = preco_vacinas * vacinas * lotes;
+        var vacina_total = vacinas * lotes
+        var vacinas_perdidas = vacina_total * 0.5
+        var perda = preco_lote - (vacinas_perdidas * preco_vacinas);
+        var vacinas_salvas = vacinas_perdidas * 0.45;
+        var economia = vacinas_salvas * preco_vacinas;
+
+        if(!mensagem_ativa){
+            mensagem.classList.toggle("hide");
+            mensagem_ativa = true;
+        }
+
+        mensagem.innerHTML = `
+            <p>Com a solução FrostSide o valor poupado será de: <span class="destaque marcado">R$${economia.toLocaleString("pt-br",{style: 'currency', currency: 'BRL'})}</span></p>
+        `;
+    }
+</script>
