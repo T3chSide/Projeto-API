@@ -40,10 +40,10 @@
             <div class="formulario login" id="form_login">
                 <h4 class="titulo_login">Login</h4>
                 <h4 class="text_input">E-mail</h4>
-                <input class="inputs_login" value="brandao@gmail.com" type="email" id="input_usuario_login">
+                <input class="inputs_login" type="email" id="input_usuario_login">
                 <a href="cadastro.html" id="a_cadastro">Não possui uma conta? Cadastre-se</a>
                 <h4 class="text_input">Senha</h4>
-                <input class="inputs_login" value="12341234" type="password" id="input_senha">
+                <input class="inputs_login"  type="password" id="input_senha">
                 <button class="button_form" id="button_logar" onclick="entrar(input_usuario_login.value, input_senha.value)">Entrar</button>
             </div>
         </div>
@@ -109,7 +109,7 @@
                 } else {
 
                     console.log("Houve um erro ao tentar realizar o login!");
-
+                    alert("Email ou senha inválidos")
                     resposta.text().then(texto => {
                         console.error(texto);
                     });
