@@ -95,13 +95,14 @@
                         console.log(json);
                         console.log(JSON.stringify(json));
 
-                        sessionStorage.EMAIL_USUARIO = json.email;
-                        sessionStorage.NOME_USUARIO = json.nome;
                         sessionStorage.ID_USUARIO = json.idUsuario;
+                        sessionStorage.NOME_USUARIO = json.nome;
+                        sessionStorage.EMAIL_USUARIO = json.email;
                         sessionStorage.FK_EMPRESA = json.fkEmpresa;
+                        sessionStorage.TIPO_USUARIO = json.tipo;
 
                         setTimeout(function () {
-                            window.location = "dashboard.html";
+                            window.location = "dashBoard.html";
                         }, 1000); // apenas para exibir o loading
 
                     });

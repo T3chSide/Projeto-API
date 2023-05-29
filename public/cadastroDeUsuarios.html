@@ -78,15 +78,15 @@
                         <label>Nome: </label>
                             <input id="nome">
                         <label>Email:</label>
-                            <input id="email">
+                            <input id="email" onkeyup="validar_email(this.value)">
                         <label>CPF:
-                            <input id="cpf"></label>
+                            <input id="input_cpf" onkeyup="validar_cpf(this.value)"></label>
                         <label>Senha:
                             <input id="senha"></label>
                         <label>Confirmar Senha:
-                            <input id="conf_senha"></label>
+                            <input id="conf_senha" onkeyup="confirmar_senha(senha.value, this.value)"></label>
                     </form>
-                    <button onclick="validar_campos(nome.value, email.value,cpf.value, senha.value, conf_senha.value)">Cadastrar</button>
+                    <button onclick="validar_campos(nome.value, email.value,input_cpf.value, senha.value, conf_senha.value)">Cadastrar</button>
                 </div>
             </div>
         </div>
@@ -98,9 +98,27 @@
 
 </body>
 
-<script src="./js/cadastrar_usuario.js"></script>
+<script src="./js/cpf.js"></script>
 
 <script>
+
+function validar_campos(nome, email, cpf, senha, conf_senha){
+        if(nome == "" || email == "" || senha == ""|| cpf == ""){
+            alert("Todos os campos são obrigatórios");
+        }else{
+            if(!confirmar_senha(senha, conf_senha)){
+                alert("As senhas precisam ser iguais");
+            }else if(!validar_senha(senha)){
+                alert("A senha precisa ter pelo menos 8 caracteres");
+            }else if(!validar_email(email)){
+                alert("E-mail inválido");
+            }else if(!validar_cpf(cpf)){
+                alert("CPF inválido");
+            }else{
+                cadastrarUsuario()
+            }
+        }
+    }
 
     function validar_email(email){
         if(email.indexOf("@") == -1 || email.indexOf(".") == -1){
@@ -127,24 +145,16 @@
         }
     }
 
-    function validar_cpf(cpf){
-        if(cpf.length<11){
-            conf_senha.style.borderColor = "red";
-            return false;
-        }else{
-            return true;
-        }
-    }
-
     function cadastrarUsuario(){
 
      //Recupere o valor da nova input pelo nome do id
         // Agora vá para o método fetch logo abaixo
         var nomeVar = nome.value;
-        var cpfVar = cpf.value;
-        var emailVar = emailUser.value;
-        var senhaVar = senhaUser.value;
-        var fkEmpresa = sessionStorage.Fk
+        var cpfVar = input_cpf.value;
+        var emailVar = email.value;
+        var senhaVar = senha.value;
+        var fkEmpresa = sessionStorage.FK_EMPRESA; 
+    
         // Enviando o valor da nova input
         fetch("/usuarios/cadastrar", {
             method: "POST",
@@ -155,9 +165,11 @@
                 // crie um atributo que recebe o valor recuperado aqui
                 // Agora vá para o arquivo routes/usuario.js
                 nomeServer: nomeVar,
-                cnpjServer: cnpjVar,
                 emailServer: emailVar,
-                senhaServer: senhaVar
+                senhaServer: senhaVar,
+                cnpjServer: sessionStorage.CNPJ_EMPRESA,
+                tipoServer: 'Comum',
+                cpfServer: cpfVar
             })
         }).then(function (resposta) {
 
@@ -166,10 +178,10 @@
             if (resposta.ok) {
 
                 setTimeout(() => {
-                    window.location = "login.html";
+                    alert('O usuário foi cadastrado com sucesso');
                 }, "2000")
 
-                limparFormulario();
+                
             } else {
                 throw ("Houve um erro ao tentar realizar o cadastro!");
             }
@@ -179,22 +191,5 @@
 
         return false;
 
-        function validar_campos(nome, email, cpf, senha, conf_senha){
-
-if(nome == "" || email == "" || senha == ""|| cpf == ""){
-    alert("Todos os campos são obrigatórios");
-}else if(!confirmar_senha(senha, conf_senha)){
-    alert("As senhas precisam ser iguais");
-}else if(!validar_senha(senha)){
-    alert("A senha precisa ter pelo menos 8 caracteres");
-}else if(!validar_email(email)){
-    alert("E-mail inválido");
-}else if(!validar_cpf(cpf)){
-    alert("Cpf inválido");
-}else{
-    cadastrarUsuario()
-}
-}
     }
-    
 </script>

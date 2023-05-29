@@ -32,7 +32,7 @@
             <li><a class="active" href="#">Dashboard</a></li>
             <li><a id="ConsultaButton" href="cadastroDeLotes.html">Cadastro de lotes</a></li>
             <li><a id="ConsultaButton" href="consultaDeLotes.html">Consulta de lotes</a></li>
-            <li><a href="cadastroDeUsuarios.html">Cadastro de usuarios</a></li>
+            <li id="bt_cadastro" style="display: none"><a href="cadastroDeUsuarios.html">Cadastro de usuarios</a></li>
             <li><a id="LogoutButton" href="login.html">Logout</a></li>
           </ul>
         </div>
@@ -63,7 +63,7 @@
 
             <li>
               <div class="InformativosTexto">
-                <a id="aNumero" href="consultaDeLotes.html">9</a>
+                <a id="aNumero" href="consultaDeLotes.html"><span id="span_armazenamento"></span></a>
                 <a href="consultaDeLotes.html">Lotes em armazenamento</a>
               </div>
               <div class="InformativosImg">
@@ -73,7 +73,7 @@
 
             <li>
               <div class="InformativosTexto">
-                <a id="aNumero" href="consultaDeLotes.html">9</a>
+                <a id="aNumero" href="consultaDeLotes.html"><span id="span_caminhao"></span></a>
                 <a href="consultaDeLotes.html">Lotes em transporte</a>
               </div>
               <div class="InformativosImg">
@@ -94,7 +94,17 @@
 
 </body>
 
+<script src="./js/contagem_containers.js"></script>
+
 <script>
+
+  if(sessionStorage.TIPO_USUARIO == 'ADM'){
+    bt_cadastro.style.display = 'block';
+  }
+
+pegar_containers('caminhao', span_caminhao);
+
+pegar_containers('armazenamento', span_armazenamento);
 
 alert("3 containers estão com a temperatura excedida\n5 containers estão em alerta");
 

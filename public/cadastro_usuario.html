@@ -15,7 +15,6 @@
     <link rel="icon" href="./assets/img/TechSide.png">
 </head>
 
-<script src="./js/cnpj.js"></script>
 <script src="./js/cadastrar_usuario.js"></script>
 <script src="./js/funcoes.js"></script>
 
@@ -48,11 +47,13 @@
                 <input class="inputs_cadastro" value="Brandão top" id="input_nome">
                 <h4 class="text_input">E-mail</h4>
                 <input class="inputs_cadastro" value="brandao@gmail.com" onkeyup="validar_email(this.value)"type="email" id="input_usuario">
+                <h4 class="text_input">CPF</h4>
+                <input class="inputs_cadastro" value="285.437.646-37" onkeyup="validar_cpf(this.value)"type="email" id="input_cpf">
                 <h4 class="text_input">Senha</h4>
                 <input class="inputs_cadastro" value="12341234" type="password" id="input_senha">
                 <h4 class="text_input">Confirmar Senha</h4>
                 <input class="inputs_cadastro" type="password" value="12341234" onkeyup="confirmar_senha(input_senha.value, this.value)" id="input_conf_senha">
-                <button class="button_form" onclick="validar_campos(input_nome.value, input_usuario.value, input_senha.value, input_conf_senha.value)">Cadastrar-se</button>
+                <button class="button_form" onclick="validar_campos(input_nome.value, input_usuario.value, input_senha.value, input_conf_senha.value, input_cpf.value)">Cadastrar-se</button>
             </div>
         </div>
     </div>
@@ -73,24 +74,30 @@
     </div>
 
 </body>
-
 </html>
+
+<script src="./js/cpf.js"></script>
 
 <script>
 
-    function validar_campos(nome, email, senha, conf_senha){
+    function validar_campos(nome, email, senha, conf_senha, cpf){
 
         if(nome == "" || email == "" || senha == ""){
             alert("Todos os campos são obrigatórios");
-        }else if(!confirmar_senha(senha, conf_senha)){
-            alert("As senhas precisam ser iguais");
-        }else if(!validar_senha(senha)){
-            alert("A senha precisa ter pelo menos 8 caracteres");
-        }else if(!validar_email(email)){
-            alert("E-mail inválido");
         }else{
-            pegar_empresa(sessionStorage.CNPJ_EMPRESA);
+            if(!confirmar_senha(senha, conf_senha)){
+                alert("As senhas precisam ser iguais");
+            }else if(!validar_senha(senha)){
+                alert("A senha precisa ter pelo menos 8 caracteres");
+            }else if(!validar_email(email)){
+                alert("E-mail inválido");
+            }else if(!validar_cpf(cpf)){
+                alert("CPF inválido");
+            }else{
+                cadastrar();
+            }
         }
+
     }
 
     function validar_email(email){

@@ -1,41 +1,9 @@
-function pegar_empresa(cnpj){
-    fetch("/empresa/listar").then(function (resposta) {
-        if (resposta.ok) {
-            if (resposta.status == 204) {
-                throw "Nenhum resultado encontrado!!";
-            }
-
-            resposta.json().then(function (resposta) {
-                console.log("Dados recebidos: ", JSON.stringify(resposta));
-
-                var idEmpresa;
-
-                for(var i = 0; i < resposta.length; i++){
-                    var empresa = resposta[i];
-                    
-                    if(empresa.cnpj == cnpj){
-                        idEmpresa = empresa.idEmpresa;
-                        break;
-                    }
-                }
-                
-                
-
-                cadastrar(idEmpresa);
-            });
-        } else {
-            throw ('Houve um erro na API!');
-        }
-    }).catch(function (resposta) {
-        console.error(resposta);
-    });
-}
-
-function cadastrar(fkEmpresa) {
+function cadastrar() {
     
     var nome = input_nome.value;
     var email = input_usuario.value;
     var senha = input_senha.value;
+    var cpf = input_cpf.value
 
     //Recupere o valor da nova input pelo nome do id
     // Agora vá para o método fetch logo abaixo
@@ -52,7 +20,9 @@ function cadastrar(fkEmpresa) {
             nomeServer: nome,
             emailServer: email,
             senhaServer: senha,
-            fkEmpresaServer: fkEmpresa
+            cnpjServer: sessionStorage.CNPJ_EMPRESA,
+            tipoServer: 'ADM',
+            cpfServer: cpf
         })
     }).then(function (resposta) {
 
