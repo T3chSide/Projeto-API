@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechSide | Login</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/cadastro_login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+    <link rel="icon" href="../assets/img/TechSide.png">
+
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <img id="logo" src="../assets/img/logofrost.svg" alt="" height="50" width="200">
+            <ul class="navbar">
+                <a class="lista" href="index.html">
+                <i class="fa-solid fa-house"></i>
+                </a>
+                <a class="lista" href="calculadoraFinanceira.html">
+                <i class="fa-solid fa-calculator"></i>
+                </a>
+                <a class="lista" href="cadastro.html">
+                <i class="fa-solid fa-right-to-bracket"></i>
+                </a>
+                <a class="lista" href="login.html">
+                <i class="fa-solid fa-user"></i>
+                </a>
+            </ul>
+        </div>
+    </div>
+    <div class="div_formulario">
+        <img src="../assets/img/login.svg" width="600px">
+        <div class="container">
+            <div class="formulario login" id="form_login">
+                <h4 class="titulo_login">Login</h4>
+                <h4 class="text_input">E-mail</h4>
+                <input class="inputs_login" type="email" id="input_usuario_login">
+                <a href="cadastro.html" id="a_cadastro">Não possui uma conta? Cadastre-se</a>
+                <h4 class="text_input">Senha</h4>
+                <input class="inputs_login"  type="password" id="input_senha">
+                <button class="button_form" id="button_logar" onclick="entrar(input_usuario_login.value, input_senha.value)">Entrar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="container">
+            <img width="300px" src="../assets/img/logofrost.svg">
+            <span>CopyRight @ TechSide 2023</span>
+            <div class="listaFooter">
+                <a class="lista itemFooter" href="https://github.com/T3chSide"><i class="fa-brands fa-github"
+                        style="background-color: #000000;"></i></a>
+                <a class="lista itemFooter" href="https://github.com/T3chSide"><i class="fa-brands fa-twitter"
+                        style="color: #ffffff; background-color: #000000;"></i></a>
+                <a class="lista itemFooter" href="https://github.com/T3chSide"><i class="fa-brands fa-instagram"
+                        style="background-color: #000000;"></i></a>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
+
+<script>
+
+
+    function entrar(email, senha) {
+
+        if (email == "" || senha == "") {
+            alert("Preencha os campo antes de prosseguir");
+            return false;
+        }else {
+            fetch("/usuarios/autenticar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    emailServer: email,
+                    senhaServer: senha
+                })
+            }).then(function (resposta) {
+                console.log("ESTOU NO THEN DO entrar()!")
+
+                if (resposta.ok) {
+                    console.log(resposta);
+
+                    resposta.json().then(json => {
+                        console.log(json);
+                        console.log(JSON.stringify(json));
+
+                        sessionStorage.ID_USUARIO = json.idUsuario;
+                        sessionStorage.NOME_USUARIO = json.nome;
+                        sessionStorage.EMAIL_USUARIO = json.email;
+                        sessionStorage.FK_EMPRESA = json.fkEmpresa;
+                        sessionStorage.TIPO_USUARIO = json.tipo;
+
+                        setTimeout(function () {
+                            window.location = "dashBoard.html";
+                        }, 1000); // apenas para exibir o loading
+
+                    });
+
+                } else {
+
+                    console.log("Houve um erro ao tentar realizar o login!");
+                    alert("Email ou senha inválidos")
+                    resposta.text().then(texto => {
+                        console.error(texto);
+                    });
+                }
+
+            }).catch(function (erro) {
+                console.log(erro);
+            })
+
+            return false;
+        }
+    }
+
+    function sumirMensagem() {
+        cardErro.style.display = "none"
+    }
+
+</script>

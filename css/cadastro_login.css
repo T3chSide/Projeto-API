@@ -1,0 +1,112 @@
+.div_formulario{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+ .div_formulario .container {
+    background-color: #457B9D;
+    opacity: 0.9;
+    height: 660px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.formulario{
+    margin: 130px 0;
+    background-color: #fff;
+    height: 300px;
+    width: 400px;
+    padding: 15px 50px;
+    display: flex;
+    flex-direction: column;
+    flex-direction: column;
+    border: solid 3px #163170;
+    border-radius: 15px;
+}
+
+#form_login{
+    height: 330px;
+    margin: 140px 0;
+
+}
+
+.titulo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    font-weight: 800;
+    margin: 10px 0 20px;
+}
+
+.titulo_login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    font-weight: 800;
+    margin: 10px 0px;
+}
+
+.text_input{
+    margin: 0;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.formulario input{
+    border: solid 1.5px black;
+    border-radius: 10px;
+    height: 20px;
+    outline: none;
+}
+
+.inputs_cadastro{
+    margin-bottom: 15px;
+}
+
+.inputs_login{
+    margin-bottom: 45px;
+}
+
+#input_usuario_login{
+    margin-bottom: 0;
+}
+
+#a_cadastro{
+    color: #163170;
+    margin-bottom: 30px;
+    font-size: small;
+    text-decoration: none;
+    opacity: 0.9;
+}
+
+#a_cadastro:hover{
+    opacity: 1;
+    transition: 0.6s;
+    text-decoration: underline;
+    opacity: 1;
+}
+
+.formulario .button_form{
+    height: 60px;
+    width: 300px;
+    background-color: #163170;
+    color: whitesmoke;
+    font-size: 25px;
+    font-weight: bolder;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    align-self: center;
+    margin-top: 20px;
+    opacity: 0.9;
+}
+
+.formulario button:hover{
+    border: solid black 3px;
+    transition: 0.4s;
+    opacity: 1;
+}

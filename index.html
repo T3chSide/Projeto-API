@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechSide | Home</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+<link rel="icon" href="./assets/img/TechSide.png">
+</head>
+
+<body>
+    <div class="header">
+        <div class="container">
+            <img id="logo" src="./assets/img/logofrost.svg" height="50px" width="200px">
+            <ul class="navbar">
+                <a class="lista" href="index.html">
+                    <i class="fa-solid fa-house"></i>
+                </a>
+                <a class="lista" href="calculadoraFinanceira.html">
+                    <i class="fa-solid fa-calculator"></i>
+                </a>
+                <a class="lista" href="cadastro.html">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                </a>
+                <a class="lista" href="login.html">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+            </ul>
+        </div>
+    </div>
+
+    <div class="pag1">
+        <div class="container main">
+            <div id="conteudoSaibaMais">
+                <div class="texto_saiba_mais">
+                    <h2 id="h2SaibaMais">Transformando ideias em realidade digital!</h2>
+                    <h3 id="h3SaibaMais">Não sonhamos com o sucesso</h3>
+                    <h3 id="h3SaibaMais">Trabalhamos com ele</h3>
+                </div>
+                <a href="saiba-mais.html"><button id="buttonSaibaMais">Saiba mais</button></a>
+            </div>
+            
+            <img width="450px" src="./assets/img/imgsgv.png">
+        </div>
+    </div>
+
+    <div class="pg4">
+        <div class="container">
+            <img width="500px" src="./assets/img/projetos.png">
+            <div class="conteudoProjeto">
+                <h1 id="h1Home">
+                    Projetos
+                </h1>
+                <div class="texto">
+                    <h2>
+                        FrostSide: Sistema de monitoramento de temperatura
+                    </h2>
+                    <p id="p_projeto">
+                        Um sistema de monitoramento de lotes de medicamentos termolábeis durante o transporte,
+                        nosso projeto conta com um conjunto de ferramentas e procedimentos utilizados para garantir
+                        que medicamentos que requerem cuidados especiais de temperatura durante o armazenamento e
+                        transporte sejam mantidos em condições adequadas para preservar sua qualidade e eficácia.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="pg5">
+        <div class="container">
+            <div class="elements">
+                <div id="textoCalc">
+                    <h1 id="h1Home">Simulador Financeiro</h1>
+                    <h2>Deseja saber quanto economizaria com nosso sistema?</h2>
+                </div>
+                <a href="calculadoraFinanceira.html"><button id="buttonSimulador">SIMULE AGORA!</button></a>
+            </div>
+            <img width="500px" src="./assets/img/calculadoraHome.png">
+        </div>
+    </div>
+
+
+    <div class="faleConosco">
+        <div class="container">
+            <div id="textoFaleConosco">
+                <h1>Fale conosco</h1>
+                <p>
+                    Quer falar com a gente? Está com alguma dúvida? Mandê-nos uma mensagem!    
+                </p>
+                <p>
+                    Pressione o botão abaixo e preencha o fomulário
+                    para entrar em contato conosco, logo te enviaremos uma resposta pelo seu email. Fique atento!
+                </p>
+            </div>
+            <button id="abrirFormulario">Mandar Mensagem</button>
+            <div class="hide" id="fade"></div>
+            <div class="hide" id="formFaleConosco">
+                <span class="textInput">Nome</span>
+                <input type="text" id="input_nome">
+                <span class="textInput">Email</span>
+                <input type="text" id="input_email">
+                <span class="textInput">Assunto</span>
+                <input type="text" id="input_assunto">
+                <span class="textInput">Mensagem</span>
+                <input id="msg" type="text">
+                <div id="buttonsFaleConosco">
+                    <button id="buttonVoltar">Cancelar</button>
+                    <button id="buttonEnviar" onclick="enviarMensagem()">Enviar</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="pg2">
+        <div class="container">
+            <div class="participantes">
+                <div class="card">
+                    <div class="imagem">
+                        <img width="100px" height="auto" src="./assets/img/Pedro.svg" alt="">
+                    </div>
+                    <h4>Pedro Silva</h4>
+                    <div class="listaFooter">
+                        <a class="lista itemFooter" href="https://github.com/T3chSide"><i class="fa-brands fa-github"
+                                style="color: black;"></i></a>
+                        <a class="lista itemFooter" href="https://github.com/T3chSide"><i class="fa-brands fa-twitter"
+                                style="color: black;"></i></a>
+                        <a class="lista itemFooter" href="https://github.com/T3chSide"><i class="fa-brands fa-instagram"
+                                style="color: black;"></i></a>
+                        <a class="lista itemFooter" href="https://github.com/T3chSide"><i class="fa-brands fa-linkedin"
+                                style="color: #000000;"></i></a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="imagem">
+                        <img width="100px" height="auto" src="./assets/img/3.svg" alt="">
+                    </div>
+                    <h4>Kauã Leal</h4>
+                    <div class="listaFooter">
+                        <a class="lista itemFooter" href="https://github.com/T3chSide"><i class="fa-brands fa-github"
+                                style="color: black;"></i></a>
+                        <a class="lista itemFooter" href="https://github.com/T3chSide"><i class="fa-brands fa-twitter"
+                                style="color: black;"></i></a>
+                        <a class="lista itemFooter" href="https://github.com/T3chSide"><i class="fa-brands fa-instagram"
+                                style="color: black;"></i></a>
+                        <a class="lista itemFooter" href="https://github.com/T3chSide"><i class="fa-brands fa-linkedin"
+                                style="color: #000000;"></i></a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="imagem">
+                        <img width="100px" height="auto" src="./assets/img/Jonas.svg" alt="">
+                    </div>
+                    <h4>Jonnas Oliveira</h4>
+                    <div class="listaFooter">
+                        <a class="lista itemFooter" href="https://github.com/T3chSide"><i class="fa-brands fa-github"
+                                style="color: black;"></i></a>
+                        <a class="lista itemFooter" href="https://github.com/T3chSide"><i class="fa-brands fa-twitter"
+                                style="color: black;"></i></a>
+                        <a class="lista itemFooter" href="https://github.com/T3chSide"><i class="fa-brands fa-instagram"
+                                style="color: black;"></i></a>
+                        <a class="lista itemFooter" href="https://github.com/T3chSide"><i class="fa-brands fa-linkedin"
+                                style="color: #000000;"></i></a>
+
+                    </div>
+                </div>
+                <div class="participantes">
+                    <div class="card">
+                        <div class="imagem">
+                            <img src="./assets/img/2.svg" width="100px" height="100px" alt="">
+                        </div>
+                        <h4>Rian Neris</h4>
+                        <div class="listaFooter">
+                            <a class="lista itemFooter" href="https://github.com/T3chSide"><i
+                                    class="fa-brands fa-github" style="color: black;"></i></a>
+                            <a class="lista itemFooter" href="https://github.com/T3chSide"><i
+                                    class="fa-brands fa-twitter" style="color: black;"></i></a>
+                            <a class="lista itemFooter" href="https://github.com/T3chSide"><i
+                                    class="fa-brands fa-instagram" style="color: black;"></i></a>
+                            <a class="lista itemFooter" href="https://github.com/T3chSide"><i
+                                    class="fa-brands fa-linkedin" style="color: #000000;"></i></a>
+
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="imagem">
+                            <img width="100px" height="auto" src="./assets/img/1.svg" alt="">
+                        </div>
+                        <h4>Brenda Catharina</h4>
+                        <div class="listaFooter">
+                            <a class="lista itemFooter" href="https://github.com/T3chSide"><i
+                                    class="fa-brands fa-github" style="color: black;"></i></a>
+                            <a class="lista itemFooter" href="https://github.com/T3chSide"><i
+                                    class="fa-brands fa-twitter" style="color: black;"></i></a>
+                            <a class="lista itemFooter" href="https://github.com/T3chSide"><i
+                                    class="fa-brands fa-instagram" style="color: black;"></i></a>
+                            <a class="lista itemFooter" href="https://github.com/T3chSide"><i
+                                    class="fa-brands fa-linkedin" style="color: #000000;"></i></a>
+
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="imagem">
+                            <img width="100px" height="auto" src="./assets/img/Sarah.svg" alt="">                        </div>
+                        <h4>Sarah Silva</h4>
+                        <div class="listaFooter">
+                            <a class="lista itemFooter" href="https://github.com/T3chSide"><i
+                                    class="fa-brands fa-github" style="color: black;"></i></a>
+                            <a class="lista itemFooter" href="https://github.com/T3chSide"><i
+                                    class="fa-brands fa-twitter" style="color: black;"></i></a>
+                            <a class="lista itemFooter" href="https://github.com/T3chSide"><i
+                                    class="fa-brands fa-instagram" style="color: black;"></i></a>
+                            <a class="lista itemFooter" href="https://github.com/T3chSide"><i
+                                    class="fa-brands fa-linkedin" style="color: #000000;"></i></a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="container">
+            <img width="300px" src="./assets/img/logofrost.svg">
+            <span>CopyRight @ TechSide 2023</span>
+            <div class="listaFooter">
+                <a class="lista itemFooter" href="https://github.com/T3chSide"><i class="fa-brands fa-github"
+                        style="background-color: #000000;"></i></a>
+                <a class="lista itemFooter" href="https://github.com/T3chSide"><i class="fa-brands fa-twitter"
+                        style="color: #ffffff; background-color: #000000;"></i></a>
+                <a class="lista itemFooter" href="https://github.com/T3chSide"><i class="fa-brands fa-instagram"
+                        style="background-color: #000000;"></i></a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</body>
+
+</html>
+
+<script>
+    const abrirForm = document.querySelector("#abrirFormulario");
+    const fecharForm = document.querySelector("#buttonVoltar");
+    const form = document.querySelector("#formFaleConosco");
+    const fade = document.querySelector("#fade");
+
+    function abrirFormulario(){
+        [form,fade].forEach((el) => el.classList.toggle("hide"));
+        
+    }
+
+    [abrirForm, fecharForm].forEach((el) => {
+        el.addEventListener("click", () => abrirFormulario());
+    })
+
+    function enviarMensagem(){
+        var nome = input_nome.value;
+        abrirFormulario();
+        alert("Obrigado por entrar em contato " + nome);
+        input_nome.value = "";
+        input_email.value = "";
+        input_assunto.value = "";
+        msg.value = "";
+    }
+    
+</script>
