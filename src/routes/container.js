@@ -11,7 +11,7 @@ router.get("/listar", function (req, res) {
     containerController.listar(req, res);
 });
 
-router.get("/listar/:tipo", function (req, res) {
+router.get("/listar/:tipo/:fkEmpresa", function (req, res) {
     containerController.listarPorTipo(req, res);
 });
 
