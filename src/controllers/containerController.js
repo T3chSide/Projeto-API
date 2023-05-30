@@ -21,8 +21,9 @@ function listar(req, res) {
 
 function listarPorTipo(req, res) {
     var tipo = req.params.tipo;
+    var fkEmpresa = req.params.fkEmpresa
 
-    containerModel.listarPorTipo(tipo)
+    containerModel.listarPorTipo(tipo, fkEmpresa)
         .then(
             function (resultado) {
                 if (resultado.length > 0) {
