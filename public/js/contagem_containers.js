@@ -1,5 +1,5 @@
-function pegar_containers(tipo, span){
-    fetch(`/container/listar/${tipo}`)
+function pegar_containers(tipo, span, fkEmpresa){
+    fetch(`/container/listar/${tipo}/${fkEmpresa}`)
         .then(resposta => {
 
             if (resposta.ok) {
