@@ -102,6 +102,22 @@
 
 <script>
 
+        function validar_campos(nome, email, cpf, senha, conf_senha){
+            if(nome == "" || email == "" || senha == ""|| cpf == ""){
+                alert("Todos os campos são obrigatórios");
+            }else if(!confirmar_senha(senha, conf_senha)){
+                alert("As senhas precisam ser iguais");
+            }else if(!validar_senha(senha)){
+                alert("A senha precisa ter pelo menos 8 caracteres");
+            }else if(!validar_email(email)){
+                alert("E-mail inválido");
+            }else if(!validar_cpf(cpf)){
+                alert("Cpf inválido");
+            }else{
+                cadastrarUsuario()
+            }
+        }
+
     function validar_email(email){
         if(email.indexOf("@") == -1 || email.indexOf(".") == -1){
             return false;
@@ -178,23 +194,6 @@
         });
 
         return false;
-
-        function validar_campos(nome, email, cpf, senha, conf_senha){
-
-if(nome == "" || email == "" || senha == ""|| cpf == ""){
-    alert("Todos os campos são obrigatórios");
-}else if(!confirmar_senha(senha, conf_senha)){
-    alert("As senhas precisam ser iguais");
-}else if(!validar_senha(senha)){
-    alert("A senha precisa ter pelo menos 8 caracteres");
-}else if(!validar_email(email)){
-    alert("E-mail inválido");
-}else if(!validar_cpf(cpf)){
-    alert("Cpf inválido");
-}else{
-    cadastrarUsuario()
-}
-}
     }
     
 </script>

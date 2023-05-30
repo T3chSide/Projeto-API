@@ -17,15 +17,22 @@ cnpj CHAR(14)
  senha VARCHAR(45),
  email VARCHAR (45),
  fkEmpresa INT,
+ tipo varchar(45),
+ cpf char(14),
  constraint fkEmpresaUser foreign key (fkEmpresa) references empresa(idEmpresa)
  );
+ 
+ SELECT * FROM usuario;
+ 
+ 
  insert into usuario(nome, senha, email, fkEmpresa)values
- ("Kauã", "12345678", "leal@gmail.com", 1);
+ ("Kauã", "12345678", "leal@gmail.com", (SELECT idEmpresa WHERE cnpj = ''));
 SELECT * FROM usuario;
+DROP TABLE usuario;
+TRUNCATE TABLE empresa;
+DROP table container;
 
 select * from empresa;
-
-
 -- Tabela Sensor
 CREATE TABLE sensor (
 idSensor INT PRIMARY KEY auto_increment,
@@ -85,11 +92,14 @@ foreign key (fkSensor) references sensor(idSensor),
 dtHoraInicio DATE,
 dtFinal DATE
  );
+ 
  INSERT INTO container VALUES
 	(null, 'caminhao', 10, 1, 1, 1, '2023-01-01', '2023-02-02'),
 	(null, 'caminhao', 100, 1, 1, 1, '2023-01-01', '2023-02-02'),
 	(null, 'armazenamento', 140, 1, 1, 1, '2023-01-01', '2023-02-02'),
 	(null, 'armazenamento', 150, 1, 1, 1, '2023-01-01', '2023-02-02');
+    
+DELETE FROM container WHERE idContainer = 1;
     
 -- query para contar os containers em transporte
 SELECT COUNT(idContainer) FROM container
