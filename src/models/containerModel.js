@@ -41,11 +41,11 @@ function pesquisarDescricao(texto) {
     return database.executar(instrucao);
 }
 
-function listarPorTipo(tipo) {
+function listarPorTipo(tipo, fkEmpresa) {
     console.log("ACESSEI O AVISO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listarPorUsuario()");
     var instrucao = `
         SELECT COUNT(idContainer) AS 'contagem' FROM container
-            WHERE tipoContainer = '${tipo}';
+            WHERE tipoContainer = '${tipo}' and fkEmpresa = ${fkEmpresa};
     `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
