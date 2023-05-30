@@ -103,11 +103,70 @@ function cadastrar(req, res) {
             );
     }
 }
+function cadastrarLote(req, res) {
+    // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
+    var cep =  req.body.cepServer 
+    var rua =  req.body.ruaServer  
+    var bairro = req.body.bairroServer 
+    var cidade = req.body.cidadeServer 
+    var numero = req.body.numeroServer
+
+    // Faça as validações dos valores
+    if (rua == undefined) {
+        res.status(400).send("Seu nome está undefined!");
+    } else if (cidade == undefined) {
+        res.status(400).send("Seu cnpj está undefined!");
+    } else {
+        // Passe os valores como parâmetro e vá para o arquivo empresaModel.js
+        empresaModel.cadastrarLote(cep, rua, bairro, cidade, numero)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao realizar o cadastro! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+function cadastrarContainer(req, res) {
+    // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
+    var empresa= req.body.empresaServer
+    var cep = req.body.cepServer
+    var tipo =  req.body.tipoServer 
+    var qtd =  req.body.qtdServer  
+    
+    // Faça as validações dos valores
+        // Passe os valores como parâmetro e vá para o arquivo empresaModel.js
+        empresaModel.cadastrarContainer(tipo, qtd, cep, empresa)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao realizar o cadastro! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
 
 module.exports = {
     entrar,
     cadastrar,
     listar,
     listarCnpj,
-    testar
+    testar,
+    cadastrarLote,
+    cadastrarContainer
 }
