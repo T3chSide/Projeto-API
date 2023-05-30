@@ -54,6 +54,7 @@
                         <p>Usuarios Cadastrados</p>
                     </div>
                     <div id="users">
+
                     </div>
                 </div>
 
@@ -87,37 +88,23 @@
 
 <script>
 
-<<<<<<< HEAD
-        function validar_campos(nome, email, cpf, senha, conf_senha){
-            if(nome == "" || email == "" || senha == ""|| cpf == ""){
-                alert("Todos os campos são obrigatórios");
-            }else if(!confirmar_senha(senha, conf_senha)){
-=======
 function validar_campos(nome, email, cpf, senha, conf_senha){
         if(nome == "" || email == "" || senha == ""|| cpf == ""){
             alert("Todos os campos são obrigatórios");
         }else{
             if(!confirmar_senha(senha, conf_senha)){
->>>>>>> c0e3da68b8e8148a256391f20698938c9aa4cf65
                 alert("As senhas precisam ser iguais");
             }else if(!validar_senha(senha)){
                 alert("A senha precisa ter pelo menos 8 caracteres");
             }else if(!validar_email(email)){
                 alert("E-mail inválido");
             }else if(!validar_cpf(cpf)){
-<<<<<<< HEAD
-                alert("Cpf inválido");
-=======
                 alert("CPF inválido");
->>>>>>> c0e3da68b8e8148a256391f20698938c9aa4cf65
             }else{
                 cadastrarUsuario()
             }
         }
-<<<<<<< HEAD
-=======
     }
->>>>>>> c0e3da68b8e8148a256391f20698938c9aa4cf65
 
     function validar_email(email){
         if(email.indexOf("@") == -1 || email.indexOf(".") == -1){
@@ -189,10 +176,7 @@ function validar_campos(nome, email, cpf, senha, conf_senha){
         });
 
         return false;
-<<<<<<< HEAD
-=======
 
->>>>>>> c0e3da68b8e8148a256391f20698938c9aa4cf65
     }
 
     function receberUsuarios() {
@@ -223,22 +207,25 @@ for(var posicao = 0; posicao<resposta.length;posicao++){
 
     users.innerHTML += `
     <div class="cardUser">
-                        <img src="./assets/img/do-utilizador.png" alt="">
-                        <div class="infUser">
-                            <div class="inf">
-                                <h4>Nome:</h4>
-                                <span>${nome_user}</span>
-                                <h4>Email:</h4>
-                                <span>${email_user}</span>
-                            </div>
-                            <div class="inf">
-                                <h4>Cpf:</h4>
-                                <span>${cpf_user}</span>
-                                <h4>Tipo:</h4>
-                                <span>${tipo_user}</span>
+                            <div class="iconsUser">
+                            <img src="./assets/img/do-utilizador.png" alt="">
+                            <img src="./assets/img/o-email.png" alt="">
+                            <img src="./assets/img/cpf.png" alt="">
+                            <img src="./assets/img/controle-de-acesso.png" alt="">
+                        </div>
+                            <div class="infUser">
+                                <div class="inf">
+                                    <h4>Nome:</h4>
+                                    <span>${nome_user}</span>
+                                    <h4>Email:</h4>
+                                    <span>${email_user}</span>
+                                    <h4>Cpf:</h4>
+                                    <span>${cpf_user}</span>
+                                    <h4>Tipo:</h4>
+                                    <span>${tipo_user}</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
     `
 }
 
