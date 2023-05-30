@@ -17,7 +17,7 @@
   href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <link rel="icon" href="./assets/img/TechSide.png">
 
-<body>
+<body onload="receberlotes()">
 
   <div class="dashboard">
 
@@ -33,7 +33,7 @@
             <li><a href="dashBoard.html">Dashboard</a></li>
             <li><a id="ConsultaButton" href="cadastroDeLotes.html">Cadastro de lotes</a></li>
             <li><a class="active" href="consultaDeLotes.html">Consulta de lotes</a></li>
-            <li><a href="cadastroDeUsuarios.html">Cadastro de usuarios</a></li>
+            <li id="bt_cadastro" style="display: none"><a href="cadastroDeUsuarios.html">Cadastro de usuarios</a></li>
             <li><a id="LogoutButton" href="login.html">Logout</a></li>
           </ul>
         </div>
@@ -56,52 +56,34 @@
             <p>Lotes Cadastrados</p>
             <img src="./assets/img/floco-de-neve.png" id="imgTruck">
           </div>
-          <div class="cardLote">
-            <a href="">Lote 1</a>
-            <div></div>
-            <button id="1" onclick="obterDadosGrafico(1),exibirLote(1)">Abrir</button>
-          </div>
-          <div class="cardLote">
-            <a href="">Lote 2</a>
-            <div></div>
-            <button id="2" onclick="obterDadosGrafico(2),exibirLote(2)">Abrir</button>
-          </div>
-          <div class="cardLote">
-            <a href="">Lote 3</a>
-            <div></div>
-            <button id="3" onclick="obterDadosGrafico(3),exibirLote(3)">Abrir</button>
-          </div>
-          <div class="cardLote">
-            <a href="">Lote 4</a>
-            <div></div>
-            <button id="4" onclick="obterDadosGrafico(4),exibirLote(4)">Abrir</button>
-          </div>
-          <div class="cardLote">
-            <a href="">Lote 5</a>
-            <div></div>
-            <button id="5" onclick="obterDadosGrafico(5),exibirLote(5)">Abrir</button>
-          </div>
-
+          <div id="cardsLote">
+        </div>
         </div>
 
         <div class="graficosLote" id="graficosLote">
-          <div id="grafico1" class="display-none">
-            <canvas id="myChartCanvas1"></canvas>
-          </div>
-          <div id="grafico2" class="display-none">
-            <canvas id="myChartCanvas2"></canvas>
-          </div>
-          <div id="grafico3" class="display-none">
-            <canvas id="myChartCanvas3"></canvas>
-          </div>
-          <div id="grafico4" class="display-none">
-            <canvas id="myChartCanvas4"></canvas>
-          </div>
-          <div id="grafico5" class="display-none">
-            <canvas id="myChartCanvas5"></canvas>
+          <div class="dadosLote">
+<p>Informações do Lote</p>
+<div class="infsLote"> 
+<div class="infLote">
+<h4>Destino:</h4>
+<h3>${rua_lote} N°${numero_endereco_lote}</h3>
+<h4>Cep:</h4>
+<h3>${cep_lote}</h3>
+<h4>Tipo:</h4>
+<h3>${tipo_lote}</h3>
+</div>
+<div class="infLote">
+  <h4>Empresa Proprietária:</h4>
+  <h3>${empresa_lote}</h3>
+  <h4>DtCadastro:</h4>
+  <h3>${dt_cadastro_lote}</h3>
+  <h4>Qtd Vacinas:</h4>
+  <h3>${qntd_vacinas_lote}</h3>
+  </div>
+</div>
           </div>
         </div>
-
+ 
       </div>
     </div>
   </div>
@@ -115,6 +97,10 @@
 </body>
 
 <script>
+
+if(sessionStorage.TIPO_USUARIO == 'ADM'){
+    bt_cadastro.style.display = 'block';
+  }
 
   let proximaAtualizacao;
 
@@ -136,19 +122,6 @@
 
     }
   }
-
-
-  // O gráfico é construído com três funções:
-  // 1. obterDadosGrafico -> Traz dados do Banco de Dados para montar o gráfico da primeira vez
-  // 2. plotarGrafico -> Monta o gráfico com os dados trazidos e exibe em tela
-  // 3. atualizarGrafico -> Atualiza o gráfico, trazendo novamente dados do Banco
-
-  // Esta função *obterDadosGrafico* busca os últimos dados inseridos em tabela de medidas.
-  // para, quando carregar o gráfico da primeira vez, já trazer com vários dados.
-  // A função *obterDadosGrafico* também invoca a função *plotarGrafico*
-
-  //     Se quiser alterar a busca, ajuste as regras de negócio em src/controllers
-  //     Para ajustar o "select", ajuste o comando sql em src/models
 
   function obterDadosGrafico(idLote) {
 
@@ -174,9 +147,6 @@
       });
   }
 
-  // Esta função *plotarGrafico* usa os dados capturados na função anterior para criar o gráfico
-  // Configura o gráfico (cores, tipo, etc), materializa-o na página e, 
-  // A função *plotarGrafico* também invoca a função *atualizarGrafico*
   function plotarGrafico(resposta, idLote) {
 
     console.log('iniciando plotagem do gráfico...');
@@ -231,12 +201,6 @@
     setTimeout(() => atualizarGrafico(idLote, dados, myChart), 2000);
   }
 
-
-  // Esta função *atualizarGrafico* atualiza o gráfico que foi renderizado na página,
-  // buscando a última medida inserida em tabela contendo as capturas, 
-
-  //     Se quiser alterar a busca, ajuste as regras de negócio em src/controllers
-  //     Para ajustar o "select", ajuste o comando sql em src/models
   function atualizarGrafico(idLote, dados, myChart) {
 
     fetch(`/medidas/tempo-real/${idLote}`, { cache: 'no-store' }).then(function (response) {
@@ -280,4 +244,41 @@
       });
 
   }
+
+  function receberlotes() {
+
+fetch(`/medidas/receberLotes`).then(function (response) {
+  if (response.ok) {
+    response.json().then(function (resposta) {
+      console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+      listarLotes(resposta)
+    });
+  } else {
+    console.error('Nenhum dado encontrado ou erro na API');
+  }
+})
+  .catch(function (error) {
+    console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+  });
+}
+
+function listarLotes(resposta){
+
+for(var posicao = 0; posicao<resposta.length;posicao++){
+
+    cardsLote.innerHTML += `
+    <div class="cardLote">
+            <a href="">Lote ${posicao+1}</a>
+            <div></div>
+            <button id="${posicao+1}" onclick="obterDadosGrafico(${posicao+1}),exibirLote(${posicao+1})">Abrir</button>
+          </div>
+    `
+    graficosLote.innerHTML += `
+
+    <div id="grafico${posicao+1}" class="display-none">
+            <canvas id="myChartCanvas${posicao+1}"></canvas>
+          </div>
+    `
+}
+}
 </script>

@@ -23,6 +23,7 @@ cnpj CHAR(14)
  );
  
  SELECT * FROM usuario;
+<<<<<<< HEAD
  
  
  insert into usuario(nome, senha, email, fkEmpresa)values
@@ -33,6 +34,9 @@ TRUNCATE TABLE empresa;
 DROP table container;
 
 select * from empresa;
+=======
+
+>>>>>>> c0e3da68b8e8148a256391f20698938c9aa4cf65
 -- Tabela Sensor
 CREATE TABLE sensor (
 idSensor INT PRIMARY KEY auto_increment,
@@ -101,6 +105,7 @@ dtFinal DATE
     
 DELETE FROM container WHERE idContainer = 1;
     
+<<<<<<< HEAD
 -- query para contar os containers em transporte
 SELECT COUNT(idContainer) FROM container
 	WHERE tipoContainer = 'caminhao';
@@ -108,3 +113,12 @@ SELECT COUNT(idContainer) FROM container
 -- query para contar os containers em armazenamento
 SELECT COUNT(idContainer) FROM container
 	WHERE tipoContainer = 'armazenamento';
+=======
+-- query para contar os containers em transporte falta especificar a empresa
+SELECT COUNT(idContainer) FROM container
+	WHERE tipoContainer = 'caminhao';
+    
+-- query para contar os containers em armazenamento idem a cima 
+SELECT COUNT(idContainer) FROM container
+	WHERE tipoContainer = 'armazenamento';
+>>>>>>> c0e3da68b8e8148a256391f20698938c9aa4cf65
