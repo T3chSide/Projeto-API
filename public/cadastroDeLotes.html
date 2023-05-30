@@ -32,7 +32,7 @@
             <li><a href="dashBoard.html">Dashboard</a></li>
             <li><a class="active" href="cadastroDeLotes.html">Cadastro de lotes</a></li>
             <li><a href="consultaDeLotes.html">Consulta de lotes</a></li>
-            <li id="bt_cadastro" style="display: none"><a href="cadastroDeUsuarios.html">Cadastro de usuarios</a></li>
+            <li><a href="cadastroDeUsuarios.html">Cadastro de usuarios</a></li>
             <li><a id="LogoutButton" href="login.html">Logout</a></li>
           </ul>
         </div>
@@ -57,19 +57,19 @@
             <input id="input_tipo_vacina">
             <label>Quantidade de Vacinas (unidades):</label>
             <input id="input_qntd_vacina">
-            <label>Cep:
-              <input name="cep" type="text" id="cep" value="" maxlength="9"
+            <label>CEP:
+              <input name="cep" type="text" id="input_cep" value="" maxlength="9"
                 onblur="pesquisacep(this.value), formatarCep(this);"></label>
             <label>Rua:
-              <input name="rua" type="text" id="rua"></label>
+              <input name="rua" type="text" id="input_rua"></label>
             <label>Bairro:
-              <input name="bairro" type="text" id="bairro"></label>
+              <input name="bairro" type="text" id="input_bairro"></label>
             <label>Cidade:
-              <input name="cidade" type="text" id="cidade"></label>
+              <input name="cidade" type="text" id="input_cidade"></label>
             <label>Estado:
-              <input name="uf" type="text" id="uf"></label>
+              <input name="uf" type="text" id="input_uf"></label>
             <label>Número:
-              <input name="ibge" type="text" id="numero"></label>
+              <input name="ibge" type="text" id="input_numero"></label>
           </form>
           <button class="botao_cadastro" onclick="cadastrarLote()">Cadastrar Lote</button>
         </div>
@@ -86,18 +86,62 @@
 </body>
 
 <script>
-
-if(sessionStorage.TIPO_USUARIO == 'ADM'){
-    bt_cadastro.style.display = 'block';
-  }
-
   function cadastrarLote() {
-    var tipo_vacina = input_tipo_vacina.value;
-    var quantidade_vacina = Number(input_qntd_vacina.value);
+    var cepVar = input_cep.value
+    var ruaVar = input_rua.value
+    var bairroVar = input_bairro.value
+    var cidadeVar = input_cidade.value
+    var ufVar = input_uf.value
+    var numeroVar = Number(input_numero.value)
 
+    fetch("/empresa/cadastrarLote", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        // crie um atributo que recebe o valor recuperado aqui
+        // Agora vá para o arquivo routes/usuario.js
+        // tipoServer: tipo_vacinaVar,
+        // qtdServer: quantidade_vacinaVar,
+        cepServer: cepVar,
+        ruaServer: ruaVar,
+        bairroServer: bairroVar,
+        cidadeServer: cidadeVar,
+        ufServer: ufVar,
+        numeroServer: numeroVar
+        // nomeServer: nomeVar,
+        // emailServer: emailVar,
+        // senhaServer: senhaVar
+
+      })
+
+    })
+    cadastrarContainer()
     exibirQR()
   }
+  function cadastrarContainer() {
+    var empresaVar = sessionStorage.FK_EMPRESA
+    var cepVar = input_cep.value
+    var tipo_vacinaVar = input_tipo_vacina.value;
+    var quantidade_vacinaVar = Number(input_qntd_vacina.value);
+    fetch("/empresa/cadastrarContainer", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        // crie um atributo que recebe o valor recuperado aqui
+        // Agora vá para o arquivo routes/usuario.js
+        empresaServer:empresaVar,
+        tipoServer: tipo_vacinaVar,
+        qtdServer: quantidade_vacinaVar,
+        cepServer: cepVar
+      })
+    })
 
+
+  }
   function consultar() {
     window.location = "consultaDeLotes.html"
   }
@@ -161,19 +205,19 @@ if(sessionStorage.TIPO_USUARIO == 'ADM'){
 
   function limpa_formulário_cep() {
     //Limpa valores do formulário de cep.
-    document.getElementById('rua').value = ("");
-    document.getElementById('bairro').value = ("");
-    document.getElementById('cidade').value = ("");
-    document.getElementById('uf').value = ("");
+    document.getElementById('input_rua').value = ("");
+    document.getElementById('input_bairro').value = ("");
+    document.getElementById('input_cidade').value = ("");
+    document.getElementById('input_uf').value = ("");
   }
 
   function meu_callback(conteudo) {
     if (!("erro" in conteudo)) {
       //Atualiza os campos com os valores.
-      document.getElementById('rua').value = (conteudo.logradouro);
-      document.getElementById('bairro').value = (conteudo.bairro);
-      document.getElementById('cidade').value = (conteudo.localidade);
-      document.getElementById('uf').value = (conteudo.uf);
+      document.getElementById('input_rua').value = (conteudo.logradouro);
+      document.getElementById('input_bairro').value = (conteudo.bairro);
+      document.getElementById('input_cidade').value = (conteudo.localidade);
+      document.getElementById('input_uf').value = (conteudo.uf);
     } //end if.
     else {
       //CEP não Encontrado.
@@ -197,10 +241,10 @@ if(sessionStorage.TIPO_USUARIO == 'ADM'){
       if (validacep.test(cep)) {
 
         //Preenche os campos com "..." enquanto consulta webservice.
-        document.getElementById('rua').value = "...";
-        document.getElementById('bairro').value = "...";
-        document.getElementById('cidade').value = "...";
-        document.getElementById('uf').value = "...";
+        document.getElementById('input_rua').value = "...";
+        document.getElementById('input_bairro').value = "...";
+        document.getElementById('input_cidade').value = "...";
+        document.getElementById('input_uf').value = "...";
 
         //Cria um elemento javascript.
         var script = document.createElement('script');
@@ -223,5 +267,4 @@ if(sessionStorage.TIPO_USUARIO == 'ADM'){
       limpa_formulário_cep();
     }
   };
-
 </script>
