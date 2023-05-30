@@ -40,9 +40,41 @@ function cadastrar(nome, cnpj) {
     return database.executar(instrucao);
 }
 
+function cadastrarLote(cep, rua, bairro, cidade, numero) {
+    console.log("ACESSEI A EMPRESA MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():");
+    
+    // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
+    //  e na ordem de inserção dos dados.
+    var instrucao = `
+        INSERT INTO endereco (cep, rua,bairro, cidade, numero) 
+        VALUES ('${cep}', '${rua}', '${bairro}', '${cidade}','${numero}');
+    `;
+    
+    
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+  function cadastrarContainer(tipo, qtd, cep, empresa){
+      console.log("ACESSEI A EMPRESA MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():");
+    
+    //     Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
+    //      e na ordem de inserção dos dados.
+        var instrucao = `
+        INSERT INTO container (tipoContainer, qtdVacinas, fkEndereco, fkEmpresa, dtHoraInicio) VALUES 
+        ('${tipo}', ${qtd} , 
+        (SELECT idEndereco FROM endereco WHERE cep='${cep}'),'${empresa}', now());
+      `;
+    
+      console.log("Executando a instrução SQL: \n" + instrucao);
+      return database.executar(instrucao);
+   
+  }
+
 module.exports = {
     entrar,
     cadastrar,
     listar,
-    listarCnpj
+    listarCnpj,
+    cadastrarLote,
+    cadastrarContainer
 };
