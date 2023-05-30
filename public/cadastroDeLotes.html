@@ -32,7 +32,7 @@
             <li><a href="dashBoard.html">Dashboard</a></li>
             <li><a class="active" href="cadastroDeLotes.html">Cadastro de lotes</a></li>
             <li><a href="consultaDeLotes.html">Consulta de lotes</a></li>
-            <li><a href="cadastroDeUsuarios.html">Cadastro de usuarios</a></li>
+            <li id="bt_cadastro" style="display: none"><a href="cadastroDeUsuarios.html">Cadastro de usuarios</a></li>
             <li><a id="LogoutButton" href="login.html">Logout</a></li>
           </ul>
         </div>
@@ -86,6 +86,10 @@
 </body>
 
 <script>
+
+if(sessionStorage.TIPO_USUARIO == 'ADM'){
+    bt_cadastro.style.display = 'block';
+  }
 
   function cadastrarLote() {
     var tipo_vacina = input_tipo_vacina.value;

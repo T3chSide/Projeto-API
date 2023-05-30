@@ -20,4 +20,8 @@ router.post("/autenticar", function (req, res) {
     usuarioController.entrar(req, res);
 });
 
+router.get("/receberUsuarios", function (req, res) {
+    usuarioController.receberUsuarios(req, res);
+});
+
 module.exports = router;

@@ -16,7 +16,7 @@
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
 </head>
 
-<body>
+<body onload="receberUsuarios()">
 
     <div class="dashboard">
 
@@ -53,22 +53,7 @@
                     <div class="tituloLote">
                         <p>Usuarios Cadastrados</p>
                     </div>
-                    <div class="cardUser">
-                        <img src="./assets/img/do-utilizador.png" alt="">
-                        <div class="infUser">
-                            <div class="inf">
-                                <h4>Nome:</h4>
-                                <span>Kauã Leal</span>
-                                <h4>Email:</h4>
-                                <span>lealkaua0310@gmail.com</span>
-                            </div>
-                            <div class="inf">
-                                <h4>Cpf:</h4>
-                                <span>56434118874</span>
-                                <h4>Senha:</h4>
-                                <span>03102004a</span>
-                            </div>
-                        </div>
+                    <div id="users">
                     </div>
                 </div>
 
@@ -192,4 +177,53 @@ function validar_campos(nome, email, cpf, senha, conf_senha){
         return false;
 
     }
+
+    function receberUsuarios() {
+
+fetch(`usuarios/receberUsuarios`).then(function (response) {
+  if (response.ok) {
+    response.json().then(function (resposta) {
+      console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+      exibirUsuarios(resposta)
+    });
+  } else {
+    console.error('Nenhum dado encontrado ou erro na API');
+  }
+})
+  .catch(function (error) {
+    console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+  });
+}
+
+function exibirUsuarios(resposta){
+
+for(var posicao = 0; posicao<resposta.length;posicao++){
+
+    var nome_user = resposta[posicao].nome
+    var email_user = resposta[posicao].email
+    var cpf_user = resposta[posicao].cpf
+    var tipo_user = resposta[posicao].tipo
+
+    users.innerHTML += `
+    <div class="cardUser">
+                        <img src="./assets/img/do-utilizador.png" alt="">
+                        <div class="infUser">
+                            <div class="inf">
+                                <h4>Nome:</h4>
+                                <span>${nome_user}</span>
+                                <h4>Email:</h4>
+                                <span>${email_user}</span>
+                            </div>
+                            <div class="inf">
+                                <h4>Cpf:</h4>
+                                <span>${cpf_user}</span>
+                                <h4>Tipo:</h4>
+                                <span>${tipo_user}</span>
+                            </div>
+                        </div>
+                    </div>
+    `
+}
+
+}
 </script>
