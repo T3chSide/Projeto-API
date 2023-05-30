@@ -31,6 +31,9 @@
                 <a class="lista" href="login.html">
                     <i class="fa-solid fa-user"></i>
                 </a>
+                <a class="lista" href="https://app.pipefy.com/public/form/8Inv0OlJ">
+                    <i class="fa-solid fa-headset"></i>
+                </a>
             </ul>
         </div>
     </div>
@@ -99,21 +102,8 @@
                     para entrar em contato conosco, logo te enviaremos uma resposta pelo seu email. Fique atento!
                 </p>
             </div>
-            <button id="abrirFormulario">Mandar Mensagem</button>
-            <div class="hide" id="fade"></div>
-            <div class="hide" id="formFaleConosco">
-                <span class="textInput">Nome</span>
-                <input type="text" id="input_nome">
-                <span class="textInput">Email</span>
-                <input type="text" id="input_email">
-                <span class="textInput">Assunto</span>
-                <input type="text" id="input_assunto">
-                <span class="textInput">Mensagem</span>
-                <input id="msg" type="text">
-                <div id="buttonsFaleConosco">
-                    <button id="buttonVoltar">Cancelar</button>
-                    <button id="buttonEnviar" onclick="enviarMensagem()">Enviar</button>
-                </div>
+            <button onclick="abrirFormulario()">Mandar Mensagem</button>
+           
             </div>
 
         </div>
@@ -254,22 +244,9 @@
     const fade = document.querySelector("#fade");
 
     function abrirFormulario(){
-        [form,fade].forEach((el) => el.classList.toggle("hide"));
+      
+        window.location.href = "https://app.pipefy.com/public/form/_1pNJW_i";
         
-    }
-
-    [abrirForm, fecharForm].forEach((el) => {
-        el.addEventListener("click", () => abrirFormulario());
-    })
-
-    function enviarMensagem(){
-        var nome = input_nome.value;
-        abrirFormulario();
-        alert("Obrigado por entrar em contato " + nome);
-        input_nome.value = "";
-        input_email.value = "";
-        input_assunto.value = "";
-        msg.value = "";
     }
     
 </script>
