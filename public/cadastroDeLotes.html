@@ -53,8 +53,11 @@
         <div class="menuCadastroLotes" id="menuCadastroLotes">
           <h4 class="titulo">Cadastro de Lotes</h4>
           <form method="get" action="." id="buscaCep">
-            <label>Tipo de Vacina: </label>
-            <input id="input_tipo_vacina">
+            <label>Tipo de Container: </label>
+            <select id="input_tipo_vacina">
+              <option value="transporte">Transporte</option>
+              <option value="armazenamento">Armazenamento</option>
+            </select>
             <label>Quantidade de Vacinas (unidades):</label>
             <input id="input_qntd_vacina">
             <label>CEP:
