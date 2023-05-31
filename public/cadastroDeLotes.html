@@ -45,9 +45,7 @@
         <div class="leftHeader">
           <img src="./assets/img/menu_FILL0_wght400_GRAD0_opsz48.svg" alt="">
         </div>
-        <a class="lista" href="https://app.pipefy.com/public/form/8Inv0OlJ">
-          <i class="fa-solid fa-headset" style="color: black;"></i>
-      </a>
+        <img src="./assets/img/home_FILL0_wght400_GRAD0_opsz48.svg" alt="">
       </div>
 
       <div class="container">
@@ -57,7 +55,7 @@
           <form method="get" action="." id="buscaCep">
             <label>Tipo de Container: </label>
             <select id="input_tipo_vacina">
-              <option value="transporte">Transporte</option>
+              <option value="caminhao">Caminhao</option>
               <option value="armazenamento">Armazenamento</option>
             </select>
             <label>Quantidade de Vacinas (unidades):</label>
@@ -122,7 +120,9 @@
       })
 
     })
-    cadastrarContainer()
+    setTimeout(() => {
+      cadastrarContainer()
+    }, 2000);
     exibirQR()
   }
   function cadastrarContainer() {
@@ -152,29 +152,36 @@
   }
 
   function voltar() {
-    menuCadastroLotes.innerHTML = `
-              <h4 class="titulo">Cadastro de Lotes</h4>
-              <form method="get" action="." id="buscaCep">
-                <label>Tipo de Vacina: </label>
-              <input id="input_tipo_vacina">
-              <label>Quantidade de Vacinas (unidades):</label>
-              <input id="input_qntd_vacina">
-                  <label>Cep:
-                <input name="cep" type="text" id="cep" value="" maxlength="9"
-                       onblur="pesquisacep(this.value), formatarCep(this);"></label>
-                <label>Rua:
-                <input name="rua" type="text" id="rua"></label>
-                <label>Bairro:
-                <input name="bairro" type="text" id="bairro"></label>
-                <label>Cidade:
-                <input name="cidade" type="text" id="cidade"></label>
-                <label>Estado:
-                <input name="uf" type="text" id="uf"></label>
-                <label>Número:
-                <input name="ibge" type="text" id="numero"></label>
-              </form>               
-               <button class="botao_cadastro" onclick="cadastrarLote()">Cadastrar Lote</button>              
-    `
+    window.location = 'cadastroDeLotes.html'
+    // menuCadastroLotes.innerHTML = `
+    // <div class="menuCadastroLotes" id="menuCadastroLotes">
+    //       <h4 class="titulo">Cadastro de Lotes</h4>
+    //       <form method="get" action="." id="buscaCep">
+    //         <label>Tipo de Container: </label>
+    //         <select id="input_tipo_vacina">
+    //           <option value="transporte">Transporte</option>
+    //           <option value="armazenamento">Armazenamento</option>
+    //         </select>
+    //         <label>Quantidade de Vacinas (unidades):</label>
+    //         <input id="input_qntd_vacina">
+    //         <label>CEP:
+    //           <input name="cep" type="text" id="input_cep" value="" maxlength="9"
+    //             onblur="pesquisacep(this.value), formatarCep(this);"></label>
+    //         <label>Rua:
+    //           <input name="rua" type="text" id="input_rua"></label>
+    //         <label>Bairro:
+    //           <input name="bairro" type="text" id="input_bairro"></label>
+    //         <label>Cidade:
+    //           <input name="cidade" type="text" id="input_cidade"></label>
+    //         <label>Estado:
+    //           <input name="uf" type="text" id="input_uf"></label>
+    //         <label>Número:
+    //           <input name="ibge" type="text" id="input_numero"></label>
+    //       </form>
+    //       <button class="botao_cadastro" onclick="cadastrarLote()">Cadastrar Lote</button>
+    //     </div>  
+    //   </div>                     
+    // `
   }
 
   function exibirQR() {
