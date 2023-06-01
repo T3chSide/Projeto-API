@@ -135,6 +135,23 @@ function cadastrarLote(req, res) {
             );
     }
 }
+function cadastrarSensor(req,res){
+    empresaModel.cadastroSensor()
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao realizar o cadastro! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+}
 function cadastrarContainer(req, res) {
     // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
     var empresa= req.body.empresaServer
@@ -168,5 +185,6 @@ module.exports = {
     listarCnpj,
     testar,
     cadastrarLote,
-    cadastrarContainer
+    cadastrarContainer,
+    cadastrarSensor
 }
