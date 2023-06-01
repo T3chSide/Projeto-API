@@ -19,6 +19,9 @@ router.get("/listarCnpj", function (req, res) {
 router.post("/cadastrar", function (req, res) {
     empresaController.cadastrar(req, res);
 })
+router.post("/cadastrarSensor", function (req, res) {
+    empresaController.cadastrarSensor(req, res);
+})
 router.post("/cadastrarLote", function (req, res) {
     empresaController.cadastrarLote(req, res);
 })
