@@ -120,9 +120,9 @@
       })
 
     })
-    setTimeout(() => {
-      cadastrarContainer()
-    }, 2000);
+    
+    cadastrarSensor()
+    cadastrarContainer()
     exibirQR()
   }
   function cadastrarContainer() {
@@ -144,8 +144,33 @@
         cepServer: cepVar
       })
     })
+  }
 
+  function cadastrarContainer() {
+    var empresaVar = sessionStorage.FK_EMPRESA
+    var cepVar = input_cep.value
+    var tipo_vacinaVar = input_tipo_vacina.value;
+    var quantidade_vacinaVar = Number(input_qntd_vacina.value);
+    fetch("/empresa/cadastrarContainer", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        // crie um atributo que recebe o valor recuperado aqui
+        // Agora vá para o arquivo routes/usuario.js
+        empresaServer:empresaVar,
+        tipoServer: tipo_vacinaVar,
+        qtdServer: quantidade_vacinaVar,
+        cepServer: cepVar
+      })
+    })
+  }
 
+  function cadastrarSensor(){
+    fetch("/empresa/cadastrarSensor", {
+      method: "POST"
+    })
   }
   function consultar() {
     window.location = "consultaDeLotes.html"
