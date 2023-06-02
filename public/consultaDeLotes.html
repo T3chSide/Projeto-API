@@ -103,6 +103,53 @@
 if(sessionStorage.TIPO_USUARIO == 'ADM'){
     bt_cadastro.style.display = 'block';
   }
+  
+  function listarEndereco(idEndereco){
+    fetch(`/endereco/listar/${idEndereco}`, { cache: 'no-store' }).then(function (response) {
+      if (response.ok) {
+        response.json().then(function (resposta) {
+          console.log(resposta)
+          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+          resposta.reverse();
+          span_rua.innerHTML = resposta[0].rua;
+          span_numero.innerHTML = resposta[0].numero;
+          span_cep.innerHTML = resposta[0].cep;
+
+        });
+      } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+      }
+    })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+  }
+
+  if (sessionStorage.TIPO_USUARIO == 'ADM') {
+    bt_cadastro.style.display = 'block';
+  }
+
+  function exibirDadosLote(idLote){
+    fetch(`/container/listar/${idLote}`, { cache: 'no-store' }).then(function (response) {
+      if (response.ok) {
+        response.json().then(function (resposta) {
+          console.log(resposta)
+          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+          resposta.reverse();
+          span_tipo.innerHTML = resposta[0].tipoContainer;
+          span_data.innerHTML = resposta[0].dtHoraInicio;
+          span_qtd_vacinas = resposta[0].qtdvacinas;
+
+          listarEndereco(resposta[0].fkEndereco);
+        });
+      } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+      }
+    })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+  }
 
   let proximaAtualizacao;
 
@@ -267,12 +314,14 @@ fetch(`/medidas/receberContainers`).then(function (response) {
 function listarLotes(resposta){
 
 for(var posicao = 0; posicao<resposta.length;posicao++){
+  
+  var idContainer = resposta[posicao].idContainer;
 
     cardsLote.innerHTML += `
     <div class="cardLote">
             <a href="">Lote ${posicao+1}</a>
             <div></div>
-            <button id="${posicao+1}" onclick="obterDadosGrafico(${posicao+1}),exibirLote(${posicao+1})">Abrir</button>
+            <button id="${posicao+1}" onclick="obterDadosGrafico(${posicao+1}),exibirLote(${idContainer})">Abrir</button>
           </div>
     `
     graficosLote.innerHTML += `
