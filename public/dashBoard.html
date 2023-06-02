@@ -5,6 +5,7 @@
   <title>FrostSide | Dashboard</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+    <script src="./js/funcoes.js"></script>
 <link rel="stylesheet" href="./css/dashboard.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,7 +35,7 @@
             <li><a id="ConsultaButton" href="cadastroDeLotes.html">Cadastro de lotes</a></li>
             <li><a id="ConsultaButton" href="consultaDeLotes.html">Consulta de lotes</a></li>
             <li id="bt_cadastro" style="display: none"><a href="cadastroDeUsuarios.html">Cadastro de usuarios</a></li>
-            <li><a id="LogoutButton" href="login.html">Logout</a></li>
+            <li><a id="LogoutButton" onclick ="limparSessao()" href="login.html">Logout</a></li>
           </ul>
         </div>
       </div>
