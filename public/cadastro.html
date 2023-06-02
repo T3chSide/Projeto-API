@@ -78,14 +78,17 @@
 <script src="./js/funcoes.js"></script>
 
 <script>
-    function validar_campos(nome, cnpj) {
+    
+     function validar_campos(nome, cnpj) {
 
-        if (nome == "" || cnpj == "") {
+        cnpjEditado = cnpj.replace(/[^\d]/g, '');
+
+        if (nome == "" || cnpjEditado == "") {
             alert("Todos os campos são obrigatórios!");
             return false;
         } else {
-            if (validar_cnpj(cnpj)) {
-                procurar_cnpj(cnpj);
+            if (validar_cnpj(cnpjEditado)) {
+                procurar_cnpj(cnpjEditado);
             } else {
                 input_cnpj.style.borderColor = 'red';
                 return false;
