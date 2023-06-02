@@ -5,7 +5,7 @@
   <title>FrostSide | Consulta de Lotes</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-  <script src="./js/funcoes.js"></script>
+<script src="./js/funcoes.js"></script>
 <link rel="stylesheet" href="./css/dashboard.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,7 +35,7 @@
             <li><a id="ConsultaButton" href="cadastroDeLotes.html">Cadastro de lotes</a></li>
             <li><a class="active" href="consultaDeLotes.html">Consulta de lotes</a></li>
             <li id="bt_cadastro" style="display: none"><a href="cadastroDeUsuarios.html">Cadastro de usuarios</a></li>
-            <li><a id="LogoutButton" onclick ="limparSessao()" href="login.html">Logout</a></li>
+            <li><a id="LogoutButton" onclick="limparSessao()" href="login.html">Logout</a></li>
           </ul>
         </div>
       </div>
@@ -49,7 +49,7 @@
         </div>
         <a class="lista" href="https://app.pipefy.com/public/form/8Inv0OlJ">
           <i class="fa-solid fa-headset" style="color: black;"></i>
-      </a>
+        </a>
       </div>
 
       <div class="containerConsulta">
@@ -59,33 +59,14 @@
             <p>Lotes Cadastrados</p>
           </div>
           <div id="cardsLote">
-        </div>
+          </div>
         </div>
 
         <div class="graficosLote" id="graficosLote">
-          <div class="dadosLote">
-<p>Informações do Lote</p>
-<div class="infsLote"> 
-<div class="infLote">
-<h4>Destino:</h4>
-<h3>${rua_lote} N°${numero_endereco_lote}</h3>
-<h4>Cep:</h4>
-<h3>${cep_lote}</h3>
-<h4>Tipo:</h4>
-<h3>${tipo_lote}</h3>
-</div>
-<div class="infLote">
-  <h4>Empresa Proprietária:</h4>
-  <h3>${empresa_lote}</h3>
-  <h4>DtCadastro:</h4>
-  <h3>${dt_cadastro_lote}</h3>
-  <h4>Qtd Vacinas:</h4>
-  <h3>${qntd_vacinas_lote}</h3>
-  </div>
-</div>
+          <div class="dadosLote" id=dadosLote>
           </div>
         </div>
- 
+
       </div>
     </div>
   </div>
@@ -100,11 +81,13 @@
 
 <script>
 
-if(sessionStorage.TIPO_USUARIO == 'ADM'){
+  var plotagensDados = 0
+
+  if (sessionStorage.TIPO_USUARIO == 'ADM') {
     bt_cadastro.style.display = 'block';
   }
-  
-  function listarEndereco(idEndereco){
+
+  function listarEndereco(idEndereco) {
     fetch(`/endereco/listar/${idEndereco}`, { cache: 'no-store' }).then(function (response) {
       if (response.ok) {
         response.json().then(function (resposta) {
@@ -129,16 +112,17 @@ if(sessionStorage.TIPO_USUARIO == 'ADM'){
     bt_cadastro.style.display = 'block';
   }
 
-  function exibirDadosLote(idLote){
+  function exibirDadosLote(idLote) {
     fetch(`/container/listar/${idLote}`, { cache: 'no-store' }).then(function (response) {
       if (response.ok) {
         response.json().then(function (resposta) {
           console.log(resposta)
           console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
           resposta.reverse();
+
           span_tipo.innerHTML = resposta[0].tipoContainer;
-          span_data.innerHTML = resposta[0].dtHoraInicio;
-          span_qtd_vacinas = resposta[0].qtdvacinas;
+          span_data.innerHTML = resposta[0].dtHoraInicio.substring(0, 10);
+          span_qtd_vacinas.innerHTML = resposta[0].qtdvacinas;
 
           listarEndereco(resposta[0].fkEndereco);
         });
@@ -156,7 +140,7 @@ if(sessionStorage.TIPO_USUARIO == 'ADM'){
   function exibirLote(idLote) {
     let todosOsGraficos = document.getElementById("graficosLote")
 
-    for (i = 1; i <= todosOsGraficos.childElementCount; i++) {
+    for (i = 1; i < todosOsGraficos.childElementCount; i++) {
       // exibindo - ou não - o gráfico
       let elementoAtual = document.getElementById(`grafico${i}`)
       if (elementoAtual.classList.contains("display-block")) {
@@ -247,7 +231,7 @@ if(sessionStorage.TIPO_USUARIO == 'ADM'){
       config
     );
 
-    setTimeout(() => atualizarGrafico(idLote, dados, myChart), 2000);
+    //setTimeout(() => atualizarGrafico(idLote, dados, myChart), 2000);
   }
 
   function atualizarGrafico(idLote, dados, myChart) {
@@ -296,40 +280,72 @@ if(sessionStorage.TIPO_USUARIO == 'ADM'){
 
   function receberlotes() {
 
-fetch(`/medidas/receberContainers`).then(function (response) {
-  if (response.ok) {
-    response.json().then(function (resposta) {
-      console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-      listarLotes(resposta)
-    });
-  } else {
-    console.error('Nenhum dado encontrado ou erro na API');
+    fetch(`/medidas/receberContainers`).then(function (response) {
+      if (response.ok) {
+        response.json().then(function (resposta) {
+          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+          listarLotes(resposta)
+        });
+      } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+      }
+    })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
   }
-})
-  .catch(function (error) {
-    console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-  });
-}
 
-function listarLotes(resposta){
+  function listarLotes(resposta) {
 
-for(var posicao = 0; posicao<resposta.length;posicao++){
-  
-  var idContainer = resposta[posicao].idContainer;
+    for (var posicao = 0; posicao < resposta.length; posicao++) {
 
-    cardsLote.innerHTML += `
+      var idContainer = resposta[posicao].idContainer;
+
+      cardsLote.innerHTML += `
     <div class="cardLote">
-            <a href="">Lote ${posicao+1}</a>
+            <a href="">Lote ${posicao + 1}</a>
             <div></div>
-            <button id="${posicao+1}" onclick="obterDadosGrafico(${posicao+1}),exibirLote(${idContainer})">Abrir</button>
+            <button id="${posicao + 1}" onclick="obterDadosGrafico(${posicao + 1}),exibirLote(${idContainer}),exibirDadosLote(${idContainer}),plotarDadosLotes()">Abrir</button>
           </div>
     `
-    graficosLote.innerHTML += `
+      graficosLote.innerHTML += `
 
-    <div id="grafico${posicao+1}" class="display-none">
-            <canvas id="myChartCanvas${posicao+1}"></canvas>
+    <div id="grafico${posicao + 1}" class="display-none">
+            <canvas id="myChartCanvas${posicao + 1}"></canvas>
           </div>
     `
+    }
+  }
+
+  function plotarDadosLotes(){
+    
+if(plotagensDados==0){
+  dadosLote.style.backgroundColor = '#E6E8EA'
+  dadosLote.innerHTML = `
+            <p>Informações do Lote</p>
+            <div class="infsLote">
+              <div class="infLote1">
+                <h4>Destino:</h4>
+                <h3><span id="span_rua"></span></h3>
+                <h3>N°<span id="span_numero"></span></h3>
+                <h4>Cep:</h4>
+                <h3><span id="span_cep"></span></h3>
+                <h4>Tipo:</h4>
+                <h3><span id="span_tipo"></span></h3>
+              </div>
+
+              <div class="infLote2">
+                <h4>DtCadastro:</h4>
+                <h3><span id="span_data"></span></h3>
+                <h4>Qtd Vacinas:</h4>
+                <h3><span id="span_qtd_vacinas"></span></h3>
+              </div>
+            </div>
+  `
 }
-}
+
+plotagensDados++
+
+  }
+
 </script>

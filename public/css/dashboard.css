@@ -240,11 +240,11 @@ padding: 3px 10px 3px 10px;
   margin-right: 5px;
   height:270px;
   border-radius: 10px;
-  background-color: #E6E8EA;
+  background-color: #163170;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 20px 0 20px;
+  padding: 0 10px 0 10px;
 }
 
 .dadosLote p{
@@ -252,9 +252,14 @@ padding: 3px 10px 3px 10px;
 }
 
 .infsLote{
+  width: 90%;
   display: flex;
   flex-direction: row;
   margin-top: 15px;
+}
+
+.infLote1{
+margin-right: 110px;
 }
 
 .cadastroUser {
@@ -629,4 +634,3 @@ margin: 20px 0 20px 0;
 #LogoutButton{
   margin-top: 210px;
 }
-
