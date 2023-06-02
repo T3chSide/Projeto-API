@@ -15,4 +15,8 @@ router.get("/receberLotes", function (req, res) {
     medidaController.receberLotes(req, res);
 });
 
+router.post("/receber-temperatura-lotes", function (req, res) {
+    medidaController.receberTemperaturaLotes(req, res);
+});
+
 module.exports = router;
