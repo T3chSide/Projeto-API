@@ -2,7 +2,7 @@ function cadastrar(cnpj_cadastrado) {
     //Recupere o valor da nova input pelo nome do id
     // Agora vá para o método fetch logo abaixo
     var nome_empresa_var = input_nome_empresa.value;
-    var cnpj_var = input_cnpj.value;
+    var cnpj_var = cnpj_cadastrado;
 
     if(!cnpj_cadastrado){
         // Enviando o valor da nova input
