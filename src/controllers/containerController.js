@@ -19,6 +19,21 @@ function listar(req, res) {
     });
 }
 
+function listarPorId(req, res){
+    var idContainer = req.params.idContainer;
+    containerModel.listarPorId(idContainer).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar os avisos: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
 function listarPorTipo(req, res) {
     var tipo = req.params.tipo;
     var fkEmpresa = req.params.fkEmpresa
@@ -139,5 +154,6 @@ module.exports = {
     pesquisarDescricao,
     publicar,
     editar,
-    deletar
+    deletar,
+    listarPorId
 }

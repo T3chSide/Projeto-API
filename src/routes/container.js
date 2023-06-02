@@ -7,8 +7,8 @@ router.get("/", function (req, res) {
     containerController.testar(req, res);
 });
 
-router.get("/listar", function (req, res) {
-    containerController.listar(req, res);
+router.get("/listar/:idContainer", function (req, res) {
+    containerController.listarPorId(req, res);
 });
 
 router.get("/listar/:tipo/:fkEmpresa", function (req, res) {
