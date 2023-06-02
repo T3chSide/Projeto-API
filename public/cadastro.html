@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -43,10 +44,12 @@
             <div class="formulario" id="div_form">
                 <h4 class="titulo">Cadastre sua empresa</h4>
                 <h4 class="text_input">Nome da empresa</h4>
-                <input class="inputs_cadastro"  id="input_nome_empresa">
+                <input class="inputs_cadastro" id="input_nome_empresa">
                 <h4 class="text_input">CNPJ</h4>
-                <input class="inputs_cadastro" onkeyup="validar_cnpj(this.value)" id="input_cnpj">
-                <button class="button_form" onclick="validar_campos(input_nome_empresa.value, input_cnpj.value)">Cadastrar-se</button>
+                <input class="inputs_cadastro" oninput="transformar_cnpj(this.value)
+                " id="input_cnpj" maxlength="18">
+                <button class="button_form"
+                    onclick="validar_campos(input_nome_empresa.value, input_cnpj.value)">Cadastrar-se</button>
             </div>
         </div>
     </div>
@@ -76,6 +79,7 @@
 
 <script>
     function validar_campos(nome, cnpj) {
+
         if (nome == "" || cnpj == "") {
             alert("Todos os campos são obrigatórios!");
             return false;
@@ -88,5 +92,17 @@
             }
         }
     }
+
+    function transformar_cnpj() {
+
+            const cnpj = input_cnpj.value.replace(/[^\d]/g, '');
+
+            let cnpj_formatado = '';
+
+                cnpj_formatado = `${cnpj.substr(0, 2)}.${cnpj.substr(2, 3)}.${cnpj.substr(5, 3)}/${cnpj.substr(8, 4)}-${cnpj.substr(12)}`;
+
+            input_cnpj.value = cnpj_formatado;
+
+        }
 
 </script>
