@@ -277,6 +277,7 @@ padding: 3px 10px 3px 10px;
 
 .tituloLote {
   justify-content: center;
+    text-align: center;
   display: flex;
   flex-direction: row;
   margin: 0;
@@ -285,7 +286,6 @@ padding: 3px 10px 3px 10px;
   margin-bottom: 20px;
   border-bottom: solid 2px #163170;
   color: white;
-    text-align: center;
 }
 
 .cardLote {

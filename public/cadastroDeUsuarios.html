@@ -91,6 +91,10 @@
 
 <script>
 
+function mascara_cpf(cpf){
+    var mascara = `${cpf}`;
+}
+
 function validar_campos(nome, email, cpf, senha, conf_senha){
         if(nome == "" || email == "" || senha == ""|| cpf == ""){
             alert("Todos os campos são obrigatórios");
@@ -125,8 +129,8 @@ function validar_campos(nome, email, cpf, senha, conf_senha){
         }
     }
 
-    function confirmar_senha(senha, conf_senha){
-        if(senha != conf_senha){
+    function confirmar_senha(senha, var_conf_senha){
+        if(senha != var_conf_senha){
             conf_senha.style.borderColor = "red";
             return false;
         }else{
@@ -142,21 +146,21 @@ function validar_campos(nome, email, cpf, senha, conf_senha){
         var cpfVar = input_cpf.value;
         var emailVar = email.value;
         var senhaVar = senha.value;
-        var fkEmpresa = sessionStorage.FK_EMPRESA; 
+        var fkEmpresa = sessionStorage.FK_EMPRESA;
     
         // Enviando o valor da nova input
-        fetch("/usuarios/cadastrar", {
+        fetch("/usuarios/cadastrar-user", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 // crie um atributo que recebe o valor recuperado aqui
-                // Agora vá para o arquivo routes/usuario.js
+                // Agora vá para o arquivo routes/usuario.
                 nomeServer: nomeVar,
                 emailServer: emailVar,
                 senhaServer: senhaVar,
-                cnpjServer: sessionStorage.CNPJ_EMPRESA,
+                fkEmpresaServer: fkEmpresa,
                 tipoServer: 'Comum',
                 cpfServer: cpfVar
             })
@@ -169,6 +173,8 @@ function validar_campos(nome, email, cpf, senha, conf_senha){
                 setTimeout(() => {
                     alert('O usuário foi cadastrado com sucesso');
                 }, "2000")
+
+                window.location = `cadastroDeUsuarios.html`
 
                 
             } else {

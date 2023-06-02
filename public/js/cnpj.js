@@ -73,7 +73,9 @@ function procurar_cnpj(cnpj){
                     }
                 }
 
-                cadastrar(cnpj);
+
+
+                cadastrar(cnpj_cadastrado);
             });
 
             
