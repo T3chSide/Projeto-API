@@ -59,12 +59,12 @@ function entrar(req, res) {
     }
 }
 
-function cadastrar(req, res) {
+function cadastrarUser(req, res) {
     // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
     var nome = req.body.nomeServer;
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
-    var cnpj = req.body.cnpjServer;
+    var fkEmpresa = req.body.fkEmpresaServer;
     var tipo = req.body.tipoServer;
     var cpf = req.body.cpfServer;
 
@@ -75,7 +75,7 @@ function cadastrar(req, res) {
         res.status(400).send("Seu e-mail está undefined!");
     }else if(senha == undefined){
         res.status(400).send("Sua senha está undefined!");
-    }else if(cnpj == undefined){
+    }else if(fkEmpresa == undefined){
         res.status(400).send("O cnpj está undefined!");
     }else if(tipo == undefined){
         res.status(400).send("O tipo está undefined!");
@@ -84,7 +84,7 @@ function cadastrar(req, res) {
     } else {
         
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.cadastrar(nome, email, senha, cnpj, tipo, cpf)
+        usuarioModel.cadastrarUser(nome, email, senha, fkEmpresa, tipo, cpf)
             .then(
                 function (resultado) {
                     res.json(resultado);
@@ -101,6 +101,7 @@ function cadastrar(req, res) {
             );
     }
 }
+
 
 function receberUsuarios(req, res) {
     usuarioModel.receberUsuarios()
@@ -121,7 +122,7 @@ function receberUsuarios(req, res) {
 
 module.exports = {
     entrar,
-    cadastrar,
+    cadastrarUser,
     listar,
     testar,
     receberUsuarios

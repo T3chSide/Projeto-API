@@ -11,10 +11,6 @@ router.get("/tempo-real/:idLote", function (req, res) {
     medidaController.buscarMedidasEmTempoReal(req, res);
 })
 
-router.get("/receberLotes", function (req, res) {
-    medidaController.receberLotes(req, res);
-});
-
 router.post("/receber-temperatura-lotes", function (req, res) {
     medidaController.receberTemperaturaLotes(req, res);
 });
