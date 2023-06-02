@@ -34,6 +34,13 @@ input{
     border: none;
     border-radius: 10px;
 }
+
+select{
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 10px;
+    height: 27px;
+}
     
 .titulo{
     margin: 0;
