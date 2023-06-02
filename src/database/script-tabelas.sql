@@ -22,31 +22,12 @@ cnpj CHAR(14)
  constraint fkEmpresaUser foreign key (fkEmpresa) references empresa(idEmpresa)
  );
  
- SELECT * FROM usuario;
-<<<<<<< HEAD
- 
- 
- insert into usuario(nome, senha, email, fkEmpresa)values
- ("Kauã", "12345678", "leal@gmail.com", (SELECT idEmpresa WHERE cnpj = ''));
-SELECT * FROM usuario;
-DROP TABLE usuario;
-TRUNCATE TABLE empresa;
-DROP table container;
-
-select * from empresa;
-=======
-
->>>>>>> c0e3da68b8e8148a256391f20698938c9aa4cf65
 -- Tabela Sensor
 CREATE TABLE sensor (
 idSensor INT PRIMARY KEY auto_increment,
 statusSensor VARCHAR(20),
 constraint chkStatus CHECK (statusSensor in ('Ativo','Inativo'))
 );
-
-select*from sensor;
-
-insert into sensor values(null, 'ativo');
 
 -- Tabela RegistroSensor
 CREATE TABLE registroSensor(
@@ -57,18 +38,6 @@ fkSensor INT,
 foreign key (fkSensor) references sensor(idSensor)
 );
 
-select*from registroSensor;
-
-insert into registroSensor values
-(null, 5 ,now(), 1
-);
-
-ALTER TABLE empresa MODIFY COLUMN cnpj CHAR(18);
-
-SELECT * fROM empresa;
-SELECT * FROM empresa;
-select*from registroSensor;
-
 -- Tabela endereço
 CREATE TABLE endereco (
 idEndereco INT PRIMARY KEY auto_increment,
@@ -78,8 +47,6 @@ bairro VARCHAR(45),
 cep CHAR(9),
 cidade VARCHAR(45)
 );
-
-INSERT INTO endereco VALUES(null, 'Rua zika', '120', 'Inácio Monteiro', '11111-111', 'São Paulo');
 
  -- Tabela Container
  CREATE TABLE container (
@@ -96,24 +63,7 @@ foreign key (fkSensor) references sensor(idSensor),
 dtHoraInicio DATE,
 dtFinal DATE
  );
- 
- INSERT INTO container VALUES
-	(null, 'caminhao', 10, 1, 1, 1, '2023-01-01', '2023-02-02'),
-	(null, 'caminhao', 100, 1, 1, 1, '2023-01-01', '2023-02-02'),
-	(null, 'armazenamento', 140, 1, 1, 1, '2023-01-01', '2023-02-02'),
-	(null, 'armazenamento', 150, 1, 1, 1, '2023-01-01', '2023-02-02');
     
-DELETE FROM container WHERE idContainer = 1;
-    
-<<<<<<< HEAD
--- query para contar os containers em transporte
-SELECT COUNT(idContainer) FROM container
-	WHERE tipoContainer = 'caminhao';
-    
--- query para contar os containers em armazenamento
-SELECT COUNT(idContainer) FROM container
-	WHERE tipoContainer = 'armazenamento';
-=======
 -- query para contar os containers em transporte falta especificar a empresa
 SELECT COUNT(idContainer) FROM container
 	WHERE tipoContainer = 'caminhao';
@@ -121,4 +71,17 @@ SELECT COUNT(idContainer) FROM container
 -- query para contar os containers em armazenamento idem a cima 
 SELECT COUNT(idContainer) FROM container
 	WHERE tipoContainer = 'armazenamento';
->>>>>>> c0e3da68b8e8148a256391f20698938c9aa4cf65
+    
+    insert into registroSensor values
+(null, 9 ,now(), 1);
+    
+    insert into sensor values(null, 'ativo');
+
+select*from registroSensor;
+select*from sensor;
+select*from container;
+select*from usuario;
+SELECT 
+    *
+FROM
+    empresa;
