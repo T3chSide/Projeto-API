@@ -124,17 +124,15 @@
         empresaServer: empresaVar,
       })
     }).then(function (resposta) {
-      console.log("ESTOU NO THEN DO entrar()!")
 
       if (resposta.ok) {
         resposta.json().then(function (resposta) {
           console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+          plotarGraficoStatus(resposta)
           plotarGraficoLotes(resposta);
-          plotagens++
         });
       } else {
 
-        alert("Houve um erro ao tentar realizar o login!");
 
         resposta.text().then(texto => {
           console.error(texto);
@@ -145,12 +143,10 @@
       console.log(erro);
     })
 
-    return false;
   }
 
   function plotarGraficoLotes(resposta) {
-
-    console.log('iniciando plotagem do gráfico...');
+    console.log('Iniciando plotagem do gráfico...');
 
     // Criando estrutura para plotar gráfico - labels
     let labels = [];
@@ -159,7 +155,7 @@
     let dados = {
       labels: labels,
       datasets: [{
-        label: 'Ultimas Temperaturas',
+        label: "Ultima Temperatura",
         data: [],
         backgroundColor: ["rgba(22, 49, 112, 0.5)"],
         borderColor: "#163170",
@@ -169,9 +165,9 @@
       }]
     };
 
-    console.log('----------------------------------------------')
-    console.log('Estes dados foram recebidos pela funcao "obterDadosGrafico" e passados para "plotarGrafico":')
-    console.log(resposta)
+    console.log('----------------------------------------------');
+    console.log('Estes dados foram recebidos pela função "obterDadosGrafico" e passados para "plotarGrafico":');
+    console.log(resposta);
 
     // Inserindo valores recebidos em estrutura para plotar o gráfico
     for (i = 0; i < resposta.length; i++) {
@@ -180,17 +176,28 @@
       dados.datasets[0].data.push(registro.temperatura);
     }
 
-    console.log('----------------------------------------------')
-    console.log('O gráfico será plotado com os respectivos valores:')
-    console.log('Labels:')
-    console.log(labels)
-    console.log('Dados:')
-    console.log(dados.datasets)
-    console.log('----------------------------------------------')
+    console.log('----------------------------------------------');
+    console.log('O gráfico será plotado com os respectivos valores:');
+    console.log('Labels:');
+    console.log(labels);
+    console.log('Dados:');
+    console.log(dados.datasets);
+    console.log('----------------------------------------------');
 
     var opcoes = {
-  responsive: true,
-  maintainAspectRatio: false}
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              var temperatura = context.parsed.y;
+              return "Temperatura atual: " + temperatura + "°C";
+            }
+          }
+        }
+      }
+    };
 
     // Criando estrutura para plotar gráfico - config
     const config = {
@@ -205,15 +212,14 @@
       config
     );
 
-    var dadosGrafico = dados.datasets
+    var dadosGrafico = dados.datasets;
 
-    setTimeout(() => atualizarGraficoTemperaturas(dados, myChart), 2000);
-
+    setTimeout(() => atualizarGraficoLotes(dados, myChart), 2000);
   }
 
-  function atualizarGraficoTemperaturas(dados, myChart) {
+  function atualizarGraficoLotes(dados, myChart) {
 
-var empresaVar = sessionStorage.FK_EMPRESA
+    var empresaVar = sessionStorage.FK_EMPRESA
 
     fetch(`/medidas/receber-temperatura-lotes`, {
       method: "POST",
@@ -224,32 +230,32 @@ var empresaVar = sessionStorage.FK_EMPRESA
         empresaServer: empresaVar,
       })
     }).then(function (resposta) {
-      console.log("ESTOU NO THEN DO entrar()!")
 
       if (resposta.ok) {
         resposta.json().then(function (resposta) {
           console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-    console.log(`Dados atuais do gráfico:`);
+          console.log(`Dados atuais do gráfico:`);
 
-    for (var posicao = 0; posicao < resposta.length; posicao++) {
+          for (var posicao = 0; posicao < resposta.length; posicao++) {
 
-      console.log(`${resposta[posicao].temperatura}`);
+            console.log(`${resposta[posicao].temperatura}`);
 
-      if(dados.labels.length<resposta.length){
-      dados.labels.push(`Lote ${resposta.length}`); // incluir um novo momento
-      }
+            if (dados.labels.length < resposta.length) {
+              dados.labels.push(`Lote ${resposta.length}`); // incluir um novo momento
+            }
 
-      dados.datasets[0].data[posicao]=resposta[posicao].temperatura; // incluir uma nova medida de umidade
+            dados.datasets[0].data[posicao] = resposta[posicao].temperatura; // incluir uma nova medida de umidade
 
-      myChart.update();
+            myChart.update();
 
-    }
+          }
 
-    // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-    proximaAtualizacao = setTimeout(() => atualizarGraficoTemperaturas(dados, myChart), 2000);
-    
+          // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
+          proximaAtualizacao = setTimeout(() => atualizarGraficoLotes(dados, myChart), 2000);
+
         });
       } else {
+
 
         resposta.text().then(texto => {
           console.error(texto);
@@ -262,5 +268,157 @@ var empresaVar = sessionStorage.FK_EMPRESA
 
     return false;
   }
+
+  function plotarGraficoStatus(resposta) {
+  console.log('Iniciando plotagem do gráfico...');
+
+  // Criando estrutura para plotar gráfico - labels
+  let labels = ["Status atual dos lotes (qntd)"];
+
+  // Criando estrutura para plotar gráfico - dados
+  let dados = {
+    labels: labels,
+    datasets: [
+      {
+        label: 'Ideal',
+        data: [],
+        backgroundColor: ["rgba(125, 235, 43, 0.5)"],
+        borderColor: "#52f90d",
+        borderWidth: 1,
+        fill: true,
+        tension: 0.1,
+      },
+      {
+        label: 'Em alerta',
+        data: [],
+        backgroundColor: ["rgba(255, 200, 9, 0.5)"],
+        borderColor: "#c7a941",
+        borderWidth: 1,
+        fill: true,
+        tension: 0.1,
+      },
+      {
+        label: 'Excedida',
+        data: [],
+        backgroundColor: ["rgba(243, 25, 6, 0.5)"],
+        borderColor: "#c60a14",
+        borderWidth: 1,
+        fill: true,
+        tension: 0.1,
+      },
+    ],
+  };
+
+  console.log('----------------------------------------------');
+  console.log('Estes dados foram recebidos pela função "obterDadosGrafico" e passados para "plotarGrafico":');
+  console.log(resposta);
+
+  // Inserindo valores recebidos em estrutura para plotar o gráfico
+  for (let i = 0; i < resposta.length; i++) {
+    const registro = resposta[i];
+
+    if (registro.temperatura >= 4 && registro.temperatura <= 6) {
+      dados.datasets[0].data.push(1);
+    } else if (
+      (registro.temperatura >= 3 && registro.temperatura < 4) ||
+      (registro.temperatura >= 7 && registro.temperatura < 8)
+    ) {
+      dados.datasets[1].data.push(1);
+    } else if (registro.temperatura < 2 || registro.temperatura > 8) {
+      dados.datasets[2].data.push(1);
+    }
+  }
+
+  console.log('----------------------------------------------');
+  console.log('O gráfico será plotado com os respectivos valores:');
+  console.log('Labels:');
+  console.log(labels);
+  console.log('Dados:');
+  console.log(dados.datasets);
+  console.log('----------------------------------------------');
+
+  const opcoes = {
+    responsive: true,
+    maintainAspectRatio: false,
+  };
+
+  // Criando estrutura para plotar gráfico - config
+  const config = {
+    type: 'bar',
+    data: dados,
+    options: opcoes,
+  };
+
+  // Adicionando gráfico criado em div na tela
+  const ctx = document.getElementById('graficoStatusLotes').getContext('2d');
+  let myChart = new Chart(ctx, config);
+
+  setTimeout(() => atualizarGraficoStatus(dados, myChart), 2000);
+}
+
+function atualizarGraficoStatus(dados, myChart) {
+
+  var empresaVar = sessionStorage.FK_EMPRESA
+
+    fetch(`/medidas/receber-temperatura-lotes`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        empresaServer: empresaVar,
+      })
+    }).then(function (resposta) {
+
+      if (resposta.ok) {
+        resposta.json().then(function (resposta) {
+
+          let lotes_ideal = 0;
+          let lotes_alerta = 0;
+          let lotes_excedida = 0;
+
+          for (let posicao = 0; posicao < resposta.length; posicao++) {
+            const temperatura_atual = resposta[posicao].temperatura;
+
+            if (temperatura_atual >= 4 && temperatura_atual <= 6) {
+              lotes_ideal++;
+            } else if (
+              (temperatura_atual >= 3 && temperatura_atual < 4) ||
+              (temperatura_atual >= 7 && temperatura_atual < 8)
+            ) {
+              lotes_alerta++;
+            } else if (temperatura_atual < 2 || temperatura_atual > 8) {
+              lotes_excedida++;
+            }
+          }
+
+          dados.datasets[0].data.shift();
+          dados.datasets[1].data.shift();
+          dados.datasets[2].data.shift();
+
+          dados.datasets[0].data.push(lotes_ideal);
+          dados.datasets[1].data.push(lotes_alerta);
+          dados.datasets[2].data.push(lotes_excedida);
+
+          myChart.update();
+
+
+          // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
+          proximaAtualizacao = setTimeout(() => atualizarGraficoStatus(dados, myChart), 10000);
+        });
+      } else {
+
+
+        resposta.text().then(texto => {
+          console.error(texto);
+        });
+      }
+
+    }).catch(function (erro) {
+      console.log(erro);
+    })
+
+    }
+
 
 </script>
