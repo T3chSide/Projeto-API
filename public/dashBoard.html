@@ -420,14 +420,36 @@ function atualizarGraficoStatus(dados, myChart) {
 
     }
 
-    function atualizarAlerts(){
+    fetch(`/medidas/receberContainers`).then(function (response) {
+      if (response.ok) {
+        response.json().then(function (resposta) {
+          console.log('OK')
+          atualizarAlerts(resposta);
+        });
+      } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+      }
+    })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+
+      function atualizarAlerts(resposta){
+            for(var i = 0; i < resposta.length; i++){
+              buscarMedidasEmTempoReal(resposta[i].idContainer);
+      }
+    }
+
+
+    /*function atualizarAlerts(){
       buscarMedidasEmTempoReal(1);
       buscarMedidasEmTempoReal(2);
       buscarMedidasEmTempoReal(3);
       buscarMedidasEmTempoReal(4);
 
-      setTimeout(atualizacaoPeriodica, 5000);
-      
-    }
+      setTimeout(atualizarAlerts, 5000);
+    }    
+*/
+
 
 </script>
