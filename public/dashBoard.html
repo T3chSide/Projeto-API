@@ -117,7 +117,7 @@
 
     var empresaVar = sessionStorage.FK_EMPRESA
 
-    fetch(`/medidas/receber-temperatura-lotes`, {
+    fetch(`/medidas/receber-temperatura-lotes/${empresaVar}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -355,7 +355,7 @@
   const ctx = document.getElementById('graficoStatusLotes').getContext('2d');
   let myChart = new Chart(ctx, config);
 
-  setTimeout(() => atualizarGraficoStatus(dados, myChart), 2000);
+  //setTimeout(() => atualizarGraficoStatus(dados, myChart), 2000);
 }
 
 function atualizarGraficoStatus(dados, myChart) {

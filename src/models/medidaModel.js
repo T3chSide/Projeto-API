@@ -56,26 +56,28 @@ function atualizarGraficoDashboard() {
     return database.executar(instrucaoSql);
 }
 
-function receberTemperaturaLotes() {
+function receberTemperaturaLotes(fkEmpresa) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ")
     var instrucao = `
-    SELECT s.idSensor, r.temperatura
-    FROM sensor s
-    LEFT JOIN registroSensor r ON s.idSensor = r.fkSensor
-    WHERE r.idRegistro = (
-        SELECT MAX(idRegistro)
-        FROM registroSensor
-        WHERE fkSensor = s.idSensor
-    );
+        SELECT s.idSensor, r.temperatura
+        FROM sensor s
+        LEFT JOIN registroSensor r 
+        ON s.idSensor = r.fkSensor JOIN container c
+        ON c.fkSensor = s.idSensor
+        WHERE r.idRegistro = (
+                SELECT MAX(idRegistro)
+                FROM registroSensor
+                WHERE fkSensor = s.idSensor
+            ) AND fkEmpresa = ${fkEmpresa};
      `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
 }
 
-function receberContainers() {
+function receberContainers(fkEmpresa) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ")
     var instrucao = `
-    SELECT * FROM container
+    SELECT * FROM container WHERE fkEmpresa = ${fkEmpresa}
     ;
      `;
     console.log("Executando a instrução SQL: \n" + instrucao);

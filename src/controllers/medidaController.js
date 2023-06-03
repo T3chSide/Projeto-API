@@ -60,7 +60,7 @@ function atualizarGraficoDashboard(req, res) {
 
 function receberTemperaturaLotes(req, res) {
 
-    var fkEmpresa = req.params.empresaServer
+    var fkEmpresa = req.params.fkEmpresa;
 
     console.log(`Recuperando medidas em tempo real`);
 
@@ -78,8 +78,8 @@ function receberTemperaturaLotes(req, res) {
 }
 
 function receberContainers(req, res) {
-
-    medidaModel.receberContainers().then(function (resultado) {
+    var fkEmpresa = req.params.fkEmpresa;
+    medidaModel.receberContainers(fkEmpresa).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {

@@ -138,7 +138,7 @@
 
   let proximaAtualizacao;
 
-  function exibirLote(idLote) {
+  function exibirLote(posicao, idLote) {
     let todosOsGraficos = document.getElementById("graficosLote")
 
     for (i = 1; i < todosOsGraficos.childElementCount; i++) {
@@ -149,12 +149,12 @@
       }
       elementoAtual.classList.add("display-none")
 
-      // exibindo - ou não - o gráfico
-      let graficoExibir = document.getElementById(`grafico${idLote}`)
+      // exibindo - ou não - o gráfico  
+      let graficoExibir = document.getElementById(`grafico${posicao}`)
       graficoExibir.classList.remove("display-none")
       graficoExibir.classList.add("display-block")
-
     }
+    
   }
 
   function obterDadosGrafico(idLote) {
@@ -232,7 +232,7 @@
       config
     );
 
-    //setTimeout(() => atualizarGrafico(idLote, dados, myChart), 2000);
+    setTimeout(() => atualizarGrafico(idLote, dados, myChart), 2000);
   }
 
   function atualizarGrafico(idLote, dados, myChart) {
@@ -281,7 +281,7 @@
 
   function receberlotes() {
 
-    fetch(`/medidas/receberContainers`).then(function (response) {
+    fetch(`/medidas/receberContainers/${sessionStorage.FK_EMPRESA}`).then(function (response) {
       if (response.ok) {
         response.json().then(function (resposta) {
           console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
@@ -306,13 +306,13 @@
     <div class="cardLote">
             <a href="">Lote ${posicao + 1}</a>
             <div></div>
-            <button id="${posicao + 1}" onclick="obterDadosGrafico(${posicao + 1}),exibirLote(${idContainer}),exibirDadosLote(${idContainer}),plotarDadosLotes()">Abrir</button>
+            <button id="${posicao + 1}" onclick="obterDadosGrafico(${idContainer}),exibirLote(${(posicao+1)},${idContainer}),exibirDadosLote(${idContainer}),plotarDadosLotes()">Abrir</button>
           </div>
     `
       graficosLote.innerHTML += `
 
-    <div id="grafico${posicao + 1}" class="display-none">
-            <canvas id="myChartCanvas${posicao + 1}"></canvas>
+    <div id="grafico${posicao+1}" class="display-none">
+            <canvas id="myChartCanvas${idContainer}"></canvas>
           </div>
     `
     }
