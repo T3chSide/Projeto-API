@@ -9,7 +9,7 @@ router.get("/ultimas/:idLote", function (req, res) {
 
 router.get("/tempo-real/:idLote", function (req, res) {
     medidaController.buscarMedidasEmTempoReal(req, res);
-})
+});
 
 router.post("/receber-temperatura-lotes", function (req, res) {
     medidaController.receberTemperaturaLotes(req, res);
