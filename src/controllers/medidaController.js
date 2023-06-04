@@ -60,7 +60,7 @@ function atualizarGraficoDashboard(req, res) {
 
 function receberTemperaturaLotes(req, res) {
 
-    var fkEmpresa = req.params.empresaServer
+    var fkEmpresa = req.params.fkEmpresa;
 
     console.log(`Recuperando medidas em tempo real`);
 
@@ -78,8 +78,23 @@ function receberTemperaturaLotes(req, res) {
 }
 
 function receberContainers(req, res) {
+    var fkEmpresa = req.params.fkEmpresa;
+    medidaModel.receberContainers(fkEmpresa).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
 
-    medidaModel.receberContainers().then(function (resultado) {
+function gerarDadosRandom(req, res) {
+    var fkEmpresa = req.params.fkEmpresa;
+    medidaModel.gerarDadosRandom(fkEmpresa).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -97,5 +112,6 @@ module.exports = {
     buscarMedidasEmTempoReal,
     atualizarGraficoDashboard,
     receberTemperaturaLotes,
-    receberContainers
+    receberContainers,
+    gerarDadosRandom
 }

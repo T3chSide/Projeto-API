@@ -4,8 +4,6 @@ USE nuvem;
 -- Tabela Empresa
 CREATE TABLE empresa (
 idEmpresa INT PRIMARY KEY auto_increment,
- senha VARCHAR(45),
- email VARCHAR (45),
 NomeComercial VARCHAR (45),
 cnpj CHAR(14)
 );
@@ -18,6 +16,7 @@ cnpj CHAR(14)
  email VARCHAR (45),
  fkEmpresa INT,
  tipo varchar(45),
+  constraint chkStatus CHECK (tipo in ('Padrão','Supervisor','Administrador')),
  cpf char(14),
  constraint fkEmpresaUser foreign key (fkEmpresa) references empresa(idEmpresa)
  );
@@ -64,24 +63,8 @@ dtHoraInicio DATE,
 dtFinal DATE
  );
     
--- query para contar os containers em transporte falta especificar a empresa
-SELECT COUNT(idContainer) FROM container
-	WHERE tipoContainer = 'caminhao';
-    
--- query para contar os containers em armazenamento idem a cima 
-SELECT COUNT(idContainer) FROM container
-	WHERE tipoContainer = 'armazenamento';
-    
-    insert into registroSensor values
-(null, 9 ,now(), 1);
-    
-    insert into sensor values(null, 'ativo');
-
 select*from registroSensor;
 select*from sensor;
 select*from container;
 select*from usuario;
-SELECT 
-    *
-FROM
-    empresa;
+select*from empresa;

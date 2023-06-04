@@ -64,7 +64,6 @@ function cadastrarUser(req, res) {
     var nome = req.body.nomeServer;
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
-    var fkEmpresa = req.body.fkEmpresaServer;
     var tipo = req.body.tipoServer;
     var cpf = req.body.cpfServer;
 
@@ -75,30 +74,55 @@ function cadastrarUser(req, res) {
         res.status(400).send("Seu e-mail está undefined!");
     }else if(senha == undefined){
         res.status(400).send("Sua senha está undefined!");
-    }else if(fkEmpresa == undefined){
-        res.status(400).send("O cnpj está undefined!");
-    }else if(tipo == undefined){
-        res.status(400).send("O tipo está undefined!");
     }else if(cpf == undefined){
         res.status(400).send("O cpf está undefined!");
-    } else {
+    }else if(tipo == undefined){
+        res.status(400).send("O tipo está undefined!");
+    }else if(tipo == 'ADM'){
+        var cnpj = req.body.cnpjServer;
+        if(cnpj == undefined){
+            res.status(400).send("O cnpj está undefined!");
+        }else {
+            // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
+            usuarioModel.cadastrarAdm(nome, email, senha, cnpj, tipo, cpf)
+                .then(
+                    function (resultado) {
+                        res.json(resultado);
+                    }
+                ).catch(
+                    function (erro) {
+                        console.log(erro);
+                        console.log(
+                            "\nHouve um erro ao realizar o cadastro! Erro: ",
+                            erro.sqlMessage
+                        );
+                        res.status(500).json(erro.sqlMessage);
+                    }
+                );
+        }
+    }else{
+        var fkEmpresa = req.body.fkEmpresaServer;
+        if(fkEmpresa == undefined){
+            res.status(400).send("A fkEmpresa está undefined!");
+        }else {
         
-        // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.cadastrarUser(nome, email, senha, fkEmpresa, tipo, cpf)
-            .then(
-                function (resultado) {
-                    res.json(resultado);
-                }
-            ).catch(
-                function (erro) {
-                    console.log(erro);
-                    console.log(
-                        "\nHouve um erro ao realizar o cadastro! Erro: ",
-                        erro.sqlMessage
-                    );
-                    res.status(500).json(erro.sqlMessage);
-                }
-            );
+            // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
+            usuarioModel.cadastrarUser(nome, email, senha, fkEmpresa, tipo, cpf)
+                .then(
+                    function (resultado) {
+                        res.json(resultado);
+                    }
+                ).catch(
+                    function (erro) {
+                        console.log(erro);
+                        console.log(
+                            "\nHouve um erro ao realizar o cadastro! Erro: ",
+                            erro.sqlMessage
+                        );
+                        res.status(500).json(erro.sqlMessage);
+                    }
+                );
+        }
     }
 }
 
