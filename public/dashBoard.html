@@ -18,7 +18,7 @@
 <link rel="stylesheet"
   href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <link rel="icon" href="./assets/img/TechSide.png">
-<body onload="receberTemperaturaLotes();atualizarAlerts()">
+<body onload="receberTemperaturaLotes();receberLotesAlerta()">
 
   <div class="dashboard">
     <div class="menuLateral">
@@ -111,12 +111,12 @@
 
   pegar_containers('armazenamento', span_armazenamento, sessionStorage.FK_EMPRESA);
 
-  function receberTemperaturaLotes(idLote) {
+  function receberTemperaturaLotes() {
 
     var empresaVar = sessionStorage.FK_EMPRESA
 
-    fetch(`/medidas/receber-temperatura-lotes/${idLote}`, {
-      method: "GET",
+    fetch(`/medidas/receber-temperatura-lotes/`, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json"
       }
@@ -127,7 +127,6 @@
           console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
           plotarGraficoStatus(resposta);
           plotarGraficoLotes(resposta);
-          atualizarAlerts(resposta);
         });
       } else {
 
@@ -416,12 +415,6 @@ function atualizarGraficoStatus(dados, myChart) {
       console.log(erro);
     })
 
-    }
-
-    function atualizarAlerts(resposta){
-        for(var i = 0; i < resposta.length; i++){
-          buscarMedidasEmTempoReal(resposta[i].idContainer);
-        }
     }
 
 /*

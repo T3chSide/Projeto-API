@@ -1,74 +1,104 @@
 var alertas = [];
 
 
-function buscarMedidasEmTempoReal(idLote) {
-  fetch(`/medidas/tempo-real/${idLote}`)
-      .then(resposta => {
+// function atualizarAlerts(resposta){
+//     for(var i = 0; i < resposta.length; i++){
+//       buscarMedidasEmTempoReal(resposta[i].idContainer);
+//     }
+// }
 
-          if (resposta.ok) {
-              resposta.json().then(resposta => {
+function receberLotesAlerta() {
 
-                  console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-
-                  alertar(resposta, idLote);
-              });
-          } else {
-
-              console.error('Nenhum dado encontrado ou erro na API');
+    fetch(`/medidas/receberTemperaturaContainers`).then(function (response) {
+        method: "GET"
+        headers: {
+            "Content-Type": "application/json"
           }
-      })
+      if (response.ok) {
+        response.json().then(function (resposta) {
+          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+            alertar(resposta);
+        });
+      } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+      }
+    })
       .catch(function (error) {
-          console.error(`Erro na obtenção dos dados do aquario p/ gráfico: ${error.message}`);
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
       });
-}
+  }
 
 
-function alertar(resposta, idLote) {
-    var temp = resposta[0].temperatura;
+// function buscarMedidasEmTempoReal(idLote) {
+//   fetch(`/medidas/tempo-real/${idLote}`)
+//       .then(resposta => {
 
-    console.log(idLote === resposta[0].fkEmpresa)
-    
-    var grauDeAviso ='';
+//           if (resposta.ok) {
+//               resposta.json().then(resposta => {
 
+//                   console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
 
-    var limites = {
-        muito_quente: 8,
-        quente: 7.5,
-        ideal: 5,
-        frio: 3.5,
-        muito_frio: 2
-    };
+//                   alertar(resposta, idLote);
+//               });
+//           } else {
 
-    var classe_temperatura = 'cor-alerta';
+//               console.error('Nenhum dado encontrado ou erro na API');
+//           }
+//       })
+//       .catch(function (error) {
+//           console.error(`Erro na obtenção dos dados do aquario p/ gráfico: ${error.message}`);
+//       });
+// }
 
-    if (temp >= limites.muito_quente) {
-        classe_temperatura = 'cor-alerta perigo-quente';
-        grauDeAviso = 'perigo quente'
-        grauDeAvisoCor = 'cor-alerta perigo-quente'
-        exibirAlerta(temp, idLote, grauDeAviso, grauDeAvisoCor)
-    }
-    else if (temp < limites.muito_quente && temp >= limites.quente) {
-        classe_temperatura = 'cor-alerta alerta-quente';
-        grauDeAviso = 'alerta quente'
-        grauDeAvisoCor = 'cor-alerta alerta-quente'
-        exibirAlerta(temp, idLote, grauDeAviso, grauDeAvisoCor)   
-    }
-    else if (temp < limites.quente && temp > limites.frio) {
-        classe_temperatura = 'cor-alerta ideal';
-        removerAlerta(idLote);
-    }
-    else if (temp <= limites.frio && temp > limites.muito_frio) {
-        classe_temperatura = 'cor-alerta alerta-frio';
-        grauDeAviso = 'alerta frio'
-        grauDeAvisoCor = 'cor-alerta alerta-frio'
-        exibirAlerta(temp, idLote, grauDeAviso, grauDeAvisoCor)
-    }
-    else if (temp <= limites.muito_frio) {
-        classe_temperatura = 'cor-alerta perigo-frio';
-        grauDeAviso = 'perigo frio'
-        grauDeAvisoCor = 'cor-alerta perigo-frio'
-        exibirAlerta(temp, idLote, grauDeAviso, grauDeAvisoCor)
+function alertar(resposta) {
+    for(var i = 0; i < resposta,length; i++){
+        var idLote = resposta[i].temperatura;
+        var temp = resposta[i].temperatura;
+
+        console.log(idLote === resposta[i].fkEmpresa)
         
+        var grauDeAviso ='';
+
+
+        var limites = {
+            muito_quente: 8,
+            quente: 7.5,
+            ideal: 5,
+            frio: 3.5,
+            muito_frio: 2
+        };
+
+        var classe_temperatura = 'cor-alerta';
+
+        if (temp >= limites.muito_quente) {
+            classe_temperatura = 'cor-alerta perigo-quente';
+            grauDeAviso = 'perigo quente'
+            grauDeAvisoCor = 'cor-alerta perigo-quente'
+            exibirAlerta(temp, idLote, grauDeAviso, grauDeAvisoCor)
+        }
+        else if (temp < limites.muito_quente && temp >= limites.quente) {
+            classe_temperatura = 'cor-alerta alerta-quente';
+            grauDeAviso = 'alerta quente'
+            grauDeAvisoCor = 'cor-alerta alerta-quente'
+            exibirAlerta(temp, idLote, grauDeAviso, grauDeAvisoCor)   
+        }
+        else if (temp < limites.quente && temp > limites.frio) {
+            classe_temperatura = 'cor-alerta ideal';
+            removerAlerta(idLote);
+        }
+        else if (temp <= limites.frio && temp > limites.muito_frio) {
+            classe_temperatura = 'cor-alerta alerta-frio';
+            grauDeAviso = 'alerta frio'
+            grauDeAvisoCor = 'cor-alerta alerta-frio'
+            exibirAlerta(temp, idLote, grauDeAviso, grauDeAvisoCor)
+        }
+        else if (temp <= limites.muito_frio) {
+            classe_temperatura = 'cor-alerta perigo-frio';
+            grauDeAviso = 'perigo frio'
+            grauDeAvisoCor = 'cor-alerta perigo-frio'
+            exibirAlerta(temp, idLote, grauDeAviso, grauDeAvisoCor)
+            
+        }
     }
 }
 
