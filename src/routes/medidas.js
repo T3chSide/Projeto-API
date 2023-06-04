@@ -23,4 +23,8 @@ router.post("/gerarDadosRandom/:fkEmpresa", function (req, res) {
     medidaController.gerarDadosRandom(req, res);
 });
 
+router.get("/receberTemperaturaContainers", function (req, res) {
+    medidaController.receberTemperaturaContainers(req, res);
+});
+
 module.exports = router;
