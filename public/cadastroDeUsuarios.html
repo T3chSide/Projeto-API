@@ -30,11 +30,12 @@
                 </div>
                 <div class="nav">
                     <ul>
-                        <li><a href="dashBoard.html">Dashboard</a></li>
-                        <li><a href="cadastroDeLotes.html">Cadastro de lotes</a></li>
-                        <li><a href="consultaDeLotes.html">Consulta de lotes</a></li>
-                        <li><a class="active" href="cadastroDeUsuarios.html">Cadastro de usuarios</a></li>
-            <li><a id="LogoutButton" onclick ="limparSessao()" href="login.html">Logout</a></li>
+                        <li id="bt_dashboard" style="display: none"><a href="dashBoard.html">Dashboard</a></li>
+                        <li id="bt_cadastro_lotes" style="display: none"><a href="cadastroDeLotes.html">Cadastro de lotes</a></li>
+                        <li id="bt_consulta" style="display: none"><a id="ConsultaButton" href="consultaDeLotes.html">Consulta de lotes</a></li>
+                        <li id="bt_cadastro_user" style="display: none"><a class="active" href="cadastroDeUsuarios.html">Cadastro de usuarios</a></li>
+                        <li><a id="LogoutButton" onclick="limparSessao()" href="login.html">Logout</a></li>
+                      </ul>
                     </ul>
                 </div>
             </div>
@@ -68,12 +69,18 @@
                             <input id="nome">
                         <label>Email:</label>
                             <input id="email" onkeyup="validar_email(this.value)">
+                            <label>Nivel de Acesso: </label>
+            <select id="tipo">
+              <option value="Administrador">Administrador</option>
+              <option value="Supervisor">Supervisor</option>
+              <option value="Padrão">Padrão</option>
+            </select>
                         <label>CPF:
-                            <input id="input_cpf" onkeyup="validar_cpf(this.value)"></label>
+                            <input id="input_cpf" oninput="transformar_cpf()" onkeyup="validar_cpf(this.value)"></label>
                         <label>Senha:
-                            <input id="senha"></label>
+                            <input type="password" id="senha"></label>
                         <label>Confirmar Senha:
-                            <input id="conf_senha" onkeyup="confirmar_senha(senha.value, this.value)"></label>
+                            <input type="password" id="conf_senha" onkeyup="confirmar_senha(senha.value, this.value)"></label>
                     </form>
                     <button onclick="validar_campos(nome.value, email.value,input_cpf.value, senha.value, conf_senha.value)">Cadastrar</button>
                 </div>
@@ -91,8 +98,30 @@
 
 <script>
 
-function mascara_cpf(cpf){
-    var mascara = `${cpf}`;
+if (sessionStorage.TIPO_USUARIO == 'Administrador') {
+    bt_cadastro_user.style.display = 'block';
+    bt_dashboard.style.display = 'block';
+    bt_cadastro_lotes.style.display = 'block';
+    bt_consulta.style.display = 'block';
+  }else if(sessionStorage.TIPO_USUARIO == 'Supervisor'){
+    bt_dashboard.style.display = 'block';
+    bt_cadastro_lotes.style.display = 'block';
+    bt_consulta.style.display = 'block';
+  }else{
+    bt_consulta.style.display = 'block';
+    bt_dashboard.style.display = 'block';
+  }
+
+function transformar_cpf() {
+
+const cpf = input_cpf.value.replace(/[^\d]/g, '');
+
+let cpf_formatado = '';
+
+cpf_formatado = `${cpf.substr(0, 3)}.${cpf.substr(3, 3)}.${cpf.substr(6, 3)}-${cpf.substr(9, 2)}`;
+
+input_cpf.value = cpf_formatado;
+
 }
 
 function validar_campos(nome, email, cpf, senha, conf_senha){
@@ -143,10 +172,11 @@ function validar_campos(nome, email, cpf, senha, conf_senha){
      //Recupere o valor da nova input pelo nome do id
         // Agora vá para o método fetch logo abaixo
         var nomeVar = nome.value;
-        var cpfVar = input_cpf.value;
+        var cpfVar = input_cpf.value.replace(/[^\d]/g, '');
         var emailVar = email.value;
         var senhaVar = senha.value;
         var fkEmpresa = sessionStorage.FK_EMPRESA;
+        var tipoVar = tipo.value
     
         // Enviando o valor da nova input
         fetch("/usuarios/cadastrar-user", {
@@ -161,7 +191,7 @@ function validar_campos(nome, email, cpf, senha, conf_senha){
                 emailServer: emailVar,
                 senhaServer: senhaVar,
                 fkEmpresaServer: fkEmpresa,
-                tipoServer: 'Comum',
+                tipoServer: tipoVar,
                 cpfServer: cpfVar
             })
         }).then(function (resposta) {
