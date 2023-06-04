@@ -96,11 +96,29 @@ LIMIT 1;
     return database.executar(instrucao);
 }
 
+function receberTemperaturaContainers() {
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ")
+    var instrucao = `
+    SELECT c.idContainer, r.temperatura
+    FROM sensor s
+    LEFT JOIN registroSensor r ON s.idSensor = r.fkSensor JOIN container AS c
+    ON c.fkSensor = idSensor
+    WHERE r.idRegistro = (
+        SELECT MAX(idRegistro)
+        FROM registroSensor
+        WHERE fkSensor = s.idSensor);
+    ;
+     `;
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
 module.exports = {
     buscarUltimasMedidas,
     buscarMedidasEmTempoReal,
     atualizarGraficoDashboard,
     receberTemperaturaLotes,
     receberContainers,
-    gerarDadosRandom
+    gerarDadosRandom,
+    receberTemperaturaContainers
 }
