@@ -19,7 +19,9 @@
   href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <link rel="icon" href="./assets/img/TechSide.png">
 
-<body onload="receberlotes(),gerarDadosRandom()">
+<body onload="receberlotes()
+// ,gerarDadosRandom()
+">
 
   <div class="dashboard">
 
@@ -34,8 +36,10 @@
           <ul>
             <li id="bt_dashboard" style="display: none"><a href="dashBoard.html">Dashboard</a></li>
             <li id="bt_cadastro_lotes" style="display: none"><a href="cadastroDeLotes.html">Cadastro de lotes</a></li>
-            <li id="bt_consulta" style="display: none"><a class="active" id="ConsultaButton" href="consultaDeLotes.html">Consulta de lotes</a></li>
-            <li id="bt_cadastro_user" style="display: none"><a href="cadastroDeUsuarios.html">Cadastro de usuarios</a></li>
+            <li id="bt_consulta" style="display: none"><a class="active" id="ConsultaButton"
+                href="consultaDeLotes.html">Consulta de lotes</a></li>
+            <li id="bt_cadastro_user" style="display: none"><a href="cadastroDeUsuarios.html">Cadastro de usuarios</a>
+            </li>
             <li><a id="LogoutButton" onclick="limparSessao()" href="login.html">Logout</a></li>
           </ul>
           </ul>
@@ -80,24 +84,29 @@
     <p>&copy; 2023 FrostSide</p>
   </div>
 </body>
+<script src="./js/alerts.js"></script>
 
 <script>
 
-if (sessionStorage.TIPO_USUARIO == 'ADM') {
+  if (sessionStorage.TIPO_USUARIO == 'Administrador') {
     bt_cadastro_user.style.display = 'block';
     bt_dashboard.style.display = 'block';
     bt_cadastro_lotes.style.display = 'block';
     bt_consulta.style.display = 'block';
-  }else if(sessionStorage.TIPO_USUARIO == 'Supervisor'){
+  } else if (sessionStorage.TIPO_USUARIO == 'Supervisor') {
     bt_dashboard.style.display = 'block';
     bt_cadastro_lotes.style.display = 'block';
     bt_consulta.style.display = 'block';
-  }else{
+  } else {
     bt_consulta.style.display = 'block';
     bt_dashboard.style.display = 'block';
   }
 
   var plotagensDados = 0
+
+  if (sessionStorage.TIPO_USUARIO == 'ADM') {
+    bt_cadastro.style.display = 'block';
+  }
 
   function listarEndereco(idEndereco) {
     fetch(`/endereco/listar/${idEndereco}`, { cache: 'no-store' }).then(function (response) {
@@ -118,6 +127,10 @@ if (sessionStorage.TIPO_USUARIO == 'ADM') {
       .catch(function (error) {
         console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
       });
+  }
+
+  if (sessionStorage.TIPO_USUARIO == 'ADM') {
+    bt_cadastro.style.display = 'block';
   }
 
   function exibirDadosLote(idLote) {
@@ -161,7 +174,7 @@ if (sessionStorage.TIPO_USUARIO == 'ADM') {
       graficoExibir.classList.remove("display-none")
       graficoExibir.classList.add("display-block")
     }
-    
+
   }
 
   function obterDadosGrafico(idLote) {
@@ -243,57 +256,57 @@ if (sessionStorage.TIPO_USUARIO == 'ADM') {
   }
 
   function atualizarGrafico(idLote, dados, myChart) {
-  fetch(`/medidas/tempo-real/${idLote}`, { cache: 'no-store' }).then(function (response) {
-    if (response.ok) {
-      response.json().then(function (novoRegistro) {
-        console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
-        console.log(`Dados atuais do gráfico:`);
-        console.log(dados);
+    fetch(`/medidas/tempo-real/${idLote}`, { cache: 'no-store' }).then(function (response) {
+      if (response.ok) {
+        response.json().then(function (novoRegistro) {
+          console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
+          console.log(`Dados atuais do gráfico:`);
+          console.log(dados);
 
-        const temperatura = novoRegistro[0].temperatura;
+          const temperatura = novoRegistro[0].temperatura;
 
-        if (temperatura >= 4 && temperatura <= 6) {
-          dados.datasets[0].borderColor = '#52f90d';
-        } else if (
-          (temperatura >= 2.1 && temperatura <= 3.9) ||
-          (temperatura >= 6.1 && temperatura <= 7.9)
-        ) {
-          dados.datasets[0].borderColor = '#c7a941';
-        } else if (temperatura < 2 || temperatura > 8) {
-          dados.datasets[0].borderColor = '#c60a14';
-        }
+          if (temperatura >= 4 && temperatura <= 6) {
+            dados.datasets[0].borderColor = '#52f90d';
+          } else if (
+            (temperatura >= 2.1 && temperatura <= 3.9) ||
+            (temperatura >= 6.1 && temperatura <= 7.9)
+          ) {
+            dados.datasets[0].borderColor = '#c7a941';
+          } else if (temperatura < 2 || temperatura > 8) {
+            dados.datasets[0].borderColor = '#c60a14';
+          }
 
-        if (novoRegistro[0].momento_grafico === dados.labels[dados.labels.length - 1]) {
-          console.log("---------------------------------------------------------------")
-          console.log("Como não há dados novos para captura, o gráfico não atualizará.")
-          console.log("Horário do novo dado capturado:")
-          console.log(novoRegistro[0].momento_grafico)
-          console.log("Horário do último dado capturado:")
-          console.log(dados.labels[dados.labels.length - 1])
-          console.log("---------------------------------------------------------------")
-        } else {
-          // Tirar e colocar valores no gráfico
-          dados.labels.shift(); // Apagar o primeiro
-          dados.labels.push(novoRegistro[0].momento_grafico); // Incluir um novo momento
+          if (novoRegistro[0].momento_grafico === dados.labels[dados.labels.length - 1]) {
+            console.log("---------------------------------------------------------------")
+            console.log("Como não há dados novos para captura, o gráfico não atualizará.")
+            console.log("Horário do novo dado capturado:")
+            console.log(novoRegistro[0].momento_grafico)
+            console.log("Horário do último dado capturado:")
+            console.log(dados.labels[dados.labels.length - 1])
+            console.log("---------------------------------------------------------------")
+          } else {
+            // Tirar e colocar valores no gráfico
+            dados.labels.shift(); // Apagar o primeiro
+            dados.labels.push(novoRegistro[0].momento_grafico); // Incluir um novo momento
 
-          dados.datasets[0].data.shift();  // Apagar o primeiro valor de temperatura
-          dados.datasets[0].data.push(temperatura); // Incluir uma nova medida de temperatura
+            dados.datasets[0].data.shift();  // Apagar o primeiro valor de temperatura
+            dados.datasets[0].data.push(temperatura); // Incluir uma nova medida de temperatura
 
-          myChart.update();
-        }
+            myChart.update();
+          }
 
+          // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
+          proximaAtualizacao = setTimeout(() => atualizarGrafico(idLote, dados, myChart), 2000);
+        });
+      } else {
+        console.error('Nenhum dado encontrado ou erro na API');
         // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
         proximaAtualizacao = setTimeout(() => atualizarGrafico(idLote, dados, myChart), 2000);
-      });
-    } else {
-      console.error('Nenhum dado encontrado ou erro na API');
-      // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-      proximaAtualizacao = setTimeout(() => atualizarGrafico(idLote, dados, myChart), 2000);
-    }
-  }).catch(function (error) {
-    console.error(`Erro na obtenção dos dados para o gráfico: ${error.message}`);
-  });
-}
+      }
+    }).catch(function (error) {
+      console.error(`Erro na obtenção dos dados para o gráfico: ${error.message}`);
+    });
+  }
 
 
   function receberlotes() {
@@ -314,32 +327,87 @@ if (sessionStorage.TIPO_USUARIO == 'ADM') {
   }
 
   function listarLotes(resposta) {
-
     for (var posicao = 0; posicao < resposta.length; posicao++) {
-
       var idContainer = resposta[posicao].idContainer;
-
-      cardsLote.innerHTML += `
+      if (resposta[posicao].tipoContainer == 'armazenamento') {
+        cardsLote.innerHTML += `
     <div class="cardLote">
             <a href="">Lote ${posicao + 1}</a>
             <div></div>
-            <button id="${posicao + 1}" onclick="obterDadosGrafico(${idContainer}),exibirLote(${(posicao+1)},${idContainer}),exibirDadosLote(${idContainer}),plotarDadosLotes()">Abrir</button>
+            <button id="${posicao + 1}" onclick="obterDadosGrafico(${idContainer}),exibirLote(${(posicao + 1)},${idContainer}),exibirDadosLote(${idContainer}),plotarDadosLotes(), mudarTipoTransporte(${idContainer})">Mudar para transporte</button>       
+            <button id="${posicao + 1}" onclick="obterDadosGrafico(${idContainer}),exibirLote(${(posicao + 1)},${idContainer}),exibirDadosLote(${idContainer}),plotarDadosLotes()">Abrir</button>
           </div>
     `
-      graficosLote.innerHTML += `
-
-    <div id="grafico${posicao+1}" class="display-none">
+        graficosLote.innerHTML += `
+    <div id="grafico${posicao + 1}" class="display-none">
             <canvas id="myChartCanvas${idContainer}"></canvas>
           </div>
     `
+      } else if (resposta[posicao].tipoContainer == 'caminhao') {
+        cardsLote.innerHTML += `
+    <div class="cardLote">
+            <a href="">Lote ${posicao + 1}</a>
+            <div></div>
+            <button id="${posicao + 1}" onclick="obterDadosGrafico(${idContainer}),exibirLote(${(posicao + 1)},${idContainer}),exibirDadosLote(${idContainer}),plotarDadosLotes(), mudarTipoArmazenamento(${idContainer})">Mudar para armazenamento</button>       
+            <button id="${posicao + 1}" onclick="obterDadosGrafico(${idContainer}),exibirLote(${(posicao + 1)},${idContainer}),exibirDadosLote(${idContainer}),plotarDadosLotes()">Abrir</button>
+          </div>
+    `
+        graficosLote.innerHTML += `
+
+    <div id="grafico${posicao + 1}" class="display-none">
+            <canvas id="myChartCanvas${idContainer}"></canvas>
+          </div>
+    `
+      }
+
     }
   }
 
-  function plotarDadosLotes(){
-    
-if(plotagensDados==0){
-  dadosLote.style.backgroundColor = '#E6E8EA'
-  dadosLote.innerHTML = `
+  function mudarTipoArmazenamento(idContainer){{
+      var idContainerT = idContainer      
+    fetch("/container/mudarArm", {
+      method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                // crie um atributo que recebe o valor recuperado aqui
+                // Agora vá para o arquivo routes/usuario.
+                idContainerServer: idContainerT
+                })
+    }).then(function (resposta) {
+      console.log("resposta: ", resposta);
+    }).catch(function (resposta) {
+      console.log(`#ERRO: ${resposta}`);
+    });
+  }
+  window.location = "consultaDeLotes.html";
+
+}
+function mudarTipoTransporte(idContainer){
+  var idContainerT = idContainer      
+    fetch("/container/mudarTransp", {
+      method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                // crie um atributo que recebe o valor recuperado aqui
+                // Agora vá para o arquivo routes/usuario.
+                idContainerServer: idContainerT
+                })
+    }).then(function (resposta) {
+      console.log("resposta: ", resposta);
+    }).catch(function (resposta) {
+      console.log(`#ERRO: ${resposta}`);
+    });
+    window.location = "consultaDeLotes.html";
+  }  
+
+  function plotarDadosLotes() {
+    if (plotagensDados == 0) {
+      dadosLote.style.backgroundColor = '#E6E8EA'
+      dadosLote.innerHTML = `
             <p>Informações do Lote</p>
             <div class="infsLote">
               <div class="infLote1">
@@ -360,9 +428,9 @@ if(plotagensDados==0){
               </div>
             </div>
   `
-}
+    }
 
-plotagensDados++
+    plotagensDados++
 
   }
 
