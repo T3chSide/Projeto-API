@@ -6,6 +6,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
     <script src="./js/funcoes.js"></script>
+    <script src="./js/alerta.js"></script>
 <link rel="stylesheet" href="./css/dashboard.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,11 +18,9 @@
 <link rel="stylesheet"
   href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <link rel="icon" href="./assets/img/TechSide.png">
-
-<body onload="receberTemperaturaLotes()">
+<body onload="receberTemperaturaLotes();atualizarAlerts()">
 
   <div class="dashboard">
-
     <div class="menuLateral">
       <div class="aside">
         <div class="logo">
@@ -52,8 +51,8 @@
         </a>
       </div>
 
+   <div id="alerta"></div>
       <div class="container">
-
         <div class="graficos">
           <canvas id="graficoStatusLotes"></canvas>
         </div>
@@ -99,7 +98,6 @@
 </body>
 
 <script src="./js/contagem_containers.js"></script>
-<script src="./js/alerts.js"></script>
 
 <script>
 
@@ -113,25 +111,23 @@
 
   pegar_containers('armazenamento', span_armazenamento, sessionStorage.FK_EMPRESA);
 
-  function receberTemperaturaLotes() {
+  function receberTemperaturaLotes(idLote) {
 
     var empresaVar = sessionStorage.FK_EMPRESA
 
-    fetch(`/medidas/receber-temperatura-lotes/${empresaVar}`, {
-      method: "POST",
+    fetch(`/medidas/receber-temperatura-lotes/${idLote}`, {
+      method: "GET",
       headers: {
         "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        empresaServer: empresaVar,
-      })
+      }
     }).then(function (resposta) {
 
       if (resposta.ok) {
         resposta.json().then(function (resposta) {
           console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-          plotarGraficoStatus(resposta)
+          plotarGraficoStatus(resposta);
           plotarGraficoLotes(resposta);
+          atualizarAlerts(resposta);
         });
       } else {
 
@@ -355,7 +351,7 @@
   const ctx = document.getElementById('graficoStatusLotes').getContext('2d');
   let myChart = new Chart(ctx, config);
 
-  //setTimeout(() => atualizarGraficoStatus(dados, myChart), 2000);
+  setTimeout(() => atualizarGraficoStatus(dados, myChart), 2000);
 }
 
 function atualizarGraficoStatus(dados, myChart) {
@@ -421,6 +417,22 @@ function atualizarGraficoStatus(dados, myChart) {
     })
 
     }
+
+    function atualizarAlerts(resposta){
+        for(var i = 0; i < resposta.length; i++){
+          buscarMedidasEmTempoReal(resposta[i].idContainer);
+        }
+    }
+
+/*
+    function atualizarAlerts(){
+      buscarMedidasEmTempoReal(1);
+      buscarMedidasEmTempoReal(2);
+      buscarMedidasEmTempoReal(3);
+      buscarMedidasEmTempoReal(4);
+      setTimeout(atualizarAlerts, 5000);
+    }    
+*/
 
 
 </script>

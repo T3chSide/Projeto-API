@@ -60,11 +60,11 @@ function atualizarGraficoDashboard(req, res) {
 
 function receberTemperaturaLotes(req, res) {
 
-    var fkEmpresa = req.params.fkEmpresa;
+    var fkLote = req.params.idLote
 
     console.log(`Recuperando medidas em tempo real`);
 
-    medidaModel.receberTemperaturaLotes(fkEmpresa).then(function (resultado) {
+    medidaModel.receberTemperaturaLotes(fkLote).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -78,8 +78,8 @@ function receberTemperaturaLotes(req, res) {
 }
 
 function receberContainers(req, res) {
-    var fkEmpresa = req.params.fkEmpresa;
-    medidaModel.receberContainers(fkEmpresa).then(function (resultado) {
+
+    medidaModel.receberContainers().then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {

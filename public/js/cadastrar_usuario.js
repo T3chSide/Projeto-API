@@ -9,7 +9,7 @@ function cadastrar() {
     // Agora vá para o método fetch logo abaixo
     // Enviando o valor da nova input
 
-    fetch("/usuarios/cadastrar-user", {
+    fetch("/usuarios/cadastrar", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
