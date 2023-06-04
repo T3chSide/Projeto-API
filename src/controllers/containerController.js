@@ -128,6 +128,42 @@ function editar(req, res) {
         );
 
 }
+function mudarTransporte (req, res){
+    var idContainer=req.body.idContainerServer
+    containerModel.mudar_transp(idContainer)
+    .then(
+        function (resultado) {
+            res.json(resultado);
+        }
+    )
+    .catch(
+        function (erro) {
+            console.log(erro);
+            console.log("Houve um erro ao realizar o post: ", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        }
+    );
+
+
+}
+function mudarArmazenamento (req, res) {
+    var idContainer = req.body.idContainerServer;
+
+    containerModel.mudar_arm(idContainer)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        )
+        .catch(
+            function (erro) {
+                console.log(erro);
+                console.log("Houve um erro ao realizar o post: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+
+}
 
 function deletar(req, res) {
     var idAviso = req.params.idAviso;
@@ -155,5 +191,7 @@ module.exports = {
     publicar,
     editar,
     deletar,
-    listarPorId
+    listarPorId,
+    mudarArmazenamento,
+    mudarTransporte
 }
