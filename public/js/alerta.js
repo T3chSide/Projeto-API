@@ -66,13 +66,13 @@ function alertar(resposta) {
 
         if (temp >= limites.muito_quente) {
             classe_temperatura = 'cor-alerta perigo-quente';
-            grauDeAviso = 'perigo quente'
+            grauDeAviso = 'excedida'
             grauDeAvisoCor = 'cor-alerta perigo-quente'
             exibirAlerta(temp, idLote, grauDeAviso, grauDeAvisoCor)
         }
         else if (temp < limites.muito_quente && temp >= limites.quente) {
             classe_temperatura = 'cor-alerta alerta-quente';
-            grauDeAviso = 'alerta quente'
+            grauDeAviso = 'em alerta'
             grauDeAvisoCor = 'cor-alerta alerta-quente'
             exibirAlerta(temp, idLote, grauDeAviso, grauDeAvisoCor)   
         }
@@ -82,13 +82,13 @@ function alertar(resposta) {
         }
         else if (temp <= limites.frio && temp > limites.muito_frio) {
             classe_temperatura = 'cor-alerta alerta-frio';
-            grauDeAviso = 'alerta frio'
+            grauDeAviso = 'em alerta'
             grauDeAvisoCor = 'cor-alerta alerta-frio'
             exibirAlerta(temp, idLote, grauDeAviso, grauDeAvisoCor)
         }
         else if (temp <= limites.muito_frio) {
             classe_temperatura = 'cor-alerta perigo-frio';
-            grauDeAviso = 'perigo frio'
+            grauDeAviso = 'abaixo do ideal'
             grauDeAvisoCor = 'cor-alerta perigo-frio'
             exibirAlerta(temp, idLote, grauDeAviso, grauDeAvisoCor)
             
@@ -117,11 +117,11 @@ function removerAlerta(idLote) {
 }
  
 function exibirCards() {
-    alerta.innerHTML = '';
+    modalNotificacoes.innerHTML = '';
 
     for (var i = 0; i < alertas.length; i++) {
         var mensagem = alertas[i];
-        alerta.innerHTML += transformarEmDiv(mensagem);
+        modalNotificacoes.innerHTML += transformarEmDiv(mensagem);
     }
 }
 
@@ -130,7 +130,7 @@ function transformarEmDiv({ idLote, temp, grauDeAviso, grauDeAvisoCor }) {
     return `<div class="mensagem-alarme">
     <div class="informacao">
     <div class="${grauDeAvisoCor}">&#12644;</div> 
-     <h3>Lote ${idLote} está em estado de ${grauDeAviso}!</h3>
+     <h3>Lote ${idLote} está com a temperatura ${grauDeAviso}!</h3>
     <small>Temperatura ${temp}.</small>   
     </div>
     <div class="alarme-sino"></div>

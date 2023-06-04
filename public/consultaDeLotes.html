@@ -6,6 +6,7 @@
   <script src="./js/random.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+<script src="./js/alerta.js"></script>
 <script src="./js/funcoes.js"></script>
 <link rel="stylesheet" href="./css/dashboard.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
@@ -19,7 +20,7 @@
   href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <link rel="icon" href="./assets/img/TechSide.png">
 
-<body onload="receberlotes()
+<body onload="receberlotes(), receberLotesAlerta()
 // ,gerarDadosRandom()
 ">
 
@@ -51,11 +52,14 @@
 
       <div class="header">
         <div class="leftHeader">
-          <img src="./assets/img/menu_FILL0_wght400_GRAD0_opsz48.svg" alt="">
+          <img onclick="mostrarModal()" src="./assets/img/packard-bell.png" alt="">
         </div>
         <a class="lista" href="https://app.pipefy.com/public/form/8Inv0OlJ">
           <i class="fa-solid fa-headset" style="color: black;"></i>
         </a>
+      </div>
+
+      <div id="modalNotificacoes">
       </div>
 
       <div class="containerConsulta">
@@ -88,7 +92,7 @@
 
 <script>
 
-  if (sessionStorage.TIPO_USUARIO == 'Administrador') {
+if (sessionStorage.TIPO_USUARIO == 'Administrador'||sessionStorage.TIPO_USUARIO == 'ADM') {
     bt_cadastro_user.style.display = 'block';
     bt_dashboard.style.display = 'block';
     bt_cadastro_lotes.style.display = 'block';
@@ -98,15 +102,13 @@
     bt_cadastro_lotes.style.display = 'block';
     bt_consulta.style.display = 'block';
   } else {
+    const botaoLote = document.getElementsByClassName('botaoLote');
+    botaoLote.style.display = 'none'
     bt_consulta.style.display = 'block';
     bt_dashboard.style.display = 'block';
   }
 
   var plotagensDados = 0
-
-  if (sessionStorage.TIPO_USUARIO == 'ADM') {
-    bt_cadastro.style.display = 'block';
-  }
 
   function listarEndereco(idEndereco) {
     fetch(`/endereco/listar/${idEndereco}`, { cache: 'no-store' }).then(function (response) {
@@ -333,10 +335,11 @@
         cardsLote.innerHTML += `
     <div class="cardLote">
             <a href="">Lote ${posicao + 1}</a>
-            <div></div>
-            <button id="${posicao + 1}" onclick="obterDadosGrafico(${idContainer}),exibirLote(${(posicao + 1)},${idContainer}),exibirDadosLote(${idContainer}),plotarDadosLotes(), mudarTipoTransporte(${idContainer})">Mudar para transporte</button>       
+            <div id="botoesLote">
+            <button class="botaoMudarLote" id="${posicao + 1}" onclick="obterDadosGrafico(${idContainer}),exibirLote(${(posicao + 1)},${idContainer}),exibirDadosLote(${idContainer}),plotarDadosLotes(), mudarTipoTransporte(${idContainer})">Armazenamento</button>       
             <button id="${posicao + 1}" onclick="obterDadosGrafico(${idContainer}),exibirLote(${(posicao + 1)},${idContainer}),exibirDadosLote(${idContainer}),plotarDadosLotes()">Abrir</button>
           </div>
+            </div>
     `
         graficosLote.innerHTML += `
     <div id="grafico${posicao + 1}" class="display-none">
@@ -347,10 +350,11 @@
         cardsLote.innerHTML += `
     <div class="cardLote">
             <a href="">Lote ${posicao + 1}</a>
-            <div></div>
-            <button id="${posicao + 1}" onclick="obterDadosGrafico(${idContainer}),exibirLote(${(posicao + 1)},${idContainer}),exibirDadosLote(${idContainer}),plotarDadosLotes(), mudarTipoArmazenamento(${idContainer})">Mudar para armazenamento</button>       
+            <div id="botoesLote">
+            <button class="botaoMudarLote" id="${posicao + 1}" onclick="obterDadosGrafico(${idContainer}),exibirLote(${(posicao + 1)},${idContainer}),exibirDadosLote(${idContainer}),plotarDadosLotes(), mudarTipoArmazenamento(${idContainer})">Transporte</button>       
             <button id="${posicao + 1}" onclick="obterDadosGrafico(${idContainer}),exibirLote(${(posicao + 1)},${idContainer}),exibirDadosLote(${idContainer}),plotarDadosLotes()">Abrir</button>
           </div>
+            </div>
     `
         graficosLote.innerHTML += `
 
@@ -433,5 +437,15 @@ function mudarTipoTransporte(idContainer){
     plotagensDados++
 
   }
+
+  function mostrarModal(){
+  var modalNotificacoes = document.getElementById("modalNotificacoes")
+
+    if (modalNotificacoes.style.display == 'none') {
+        modalNotificacoes.style.display = `flex`
+    } else {
+        modalNotificacoes.style.display = 'none'
+    }
+}
 
 </script>

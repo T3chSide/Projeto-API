@@ -48,11 +48,14 @@
 
       <div class="header">
         <div class="leftHeader">
-          <img src="./assets/img/menu_FILL0_wght400_GRAD0_opsz48.svg" alt="">
+          <img onclick="mostrarModal()" src="./assets/img/packard-bell.png" alt="">
         </div>
         <a class="lista" href="https://app.pipefy.com/public/form/8Inv0OlJ">
           <i class="fa-solid fa-headset" style="color: black;"></i>
         </a>
+      </div>
+
+      <div id="modalNotificacoes">
       </div>
 
     <div id="alerta"></div>
@@ -107,7 +110,7 @@
 
   var plotagens = 0
 
-  if (sessionStorage.TIPO_USUARIO == 'ADM') {
+  if (sessionStorage.TIPO_USUARIO == 'Administrador'||sessionStorage.TIPO_USUARIO == 'ADM') {
     bt_cadastro_user.style.display = 'block';
     bt_dashboard.style.display = 'block';
     bt_cadastro_lotes.style.display = 'block';
@@ -483,5 +486,15 @@
         console.log(erro);
       });
   }
+
+function mostrarModal(){
+  var modalNotificacoes = document.getElementById("modalNotificacoes")
+
+    if (modalNotificacoes.style.display == 'none') {
+        modalNotificacoes.style.display = `flex`
+    } else {
+        modalNotificacoes.style.display = 'none'
+    }
+}
 
 </script>
