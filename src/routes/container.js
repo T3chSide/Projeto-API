@@ -10,7 +10,12 @@ router.get("/", function (req, res) {
 router.get("/listar/:idContainer", function (req, res) {
     containerController.listarPorId(req, res);
 });
-
+router.post("/mudarArm", function (req, res) {
+    containerController.mudarArmazenamento(req, res);
+});
+router.post("/mudarTransp", function (req, res) {
+    containerController.mudarTransporte(req, res);
+});
 router.get("/listar/:tipo/:fkEmpresa", function (req, res) {
     containerController.listarPorTipo(req, res);
 });
