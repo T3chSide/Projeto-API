@@ -2,7 +2,7 @@ function gerarDadosRandom() {
 
     var fkEmpresa = sessionStorage.FK_EMPRESA
 
-    fetch(`/medidas/gerarDadosRandom/${fkEmpresa}`, {
+    fetch(`/medidas/gerarDadosRandom`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

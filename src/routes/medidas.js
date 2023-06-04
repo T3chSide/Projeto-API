@@ -19,11 +19,11 @@ router.get("/receberContainers/:fkEmpresa", function (req, res) {
     medidaController.receberContainers(req, res);
 });
 
-router.post("/gerarDadosRandom/:fkEmpresa", function (req, res) {
+router.post("/gerarDadosRandom", function (req, res) {
     medidaController.gerarDadosRandom(req, res);
 });
 
-router.get("/receberTemperaturaContainers", function (req, res) {
+router.get("/receberTemperaturaContainers/:fkEmpresa", function (req, res) {
     medidaController.receberTemperaturaContainers(req, res);
 });
 

@@ -1,5 +1,3 @@
-
-
 var alertas = [];
 
 
@@ -11,7 +9,7 @@ var alertas = [];
 
 
 function receberLotesAlerta() {
-    fetch(`/medidas/receberTemperaturaContainers`).then(function (response) {
+    fetch(`/medidas/receberTemperaturaContainers/${sessionStorage.FK_EMPRESA}`).then(function (response) {
       if (response.ok) {
         response.json().then(function (resposta) {
           console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);

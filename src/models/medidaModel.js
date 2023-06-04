@@ -84,19 +84,17 @@ function receberContainers(fkEmpresa) {
     return database.executar(instrucao);
 }
 
-function gerarDadosRandom(fkEmpresa) {
+function gerarDadosRandom() {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ")
     var instrucao = `
-    INSERT INTO registroSensor (temperatura, fkSensor)
-SELECT ROUND(RAND() * 12, 2), FLOOR(RAND() * (select max(idSensor) from sensor)) + 1
-FROM registroSensor
-LIMIT 1;
+        INSERT INTO registroSensor (temperatura, fkSensor) VALUES
+        ((SELECT ROUND(RAND() * 12, 2)), ((SELECT MAX(idSensor) FROM sensor) - 1) * RAND() + 1);
      `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
 }
 
-function receberTemperaturaContainers() {
+function receberTemperaturaContainers(fkEmpresa) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ")
     var instrucao = `
     SELECT c.idContainer, r.temperatura
@@ -106,7 +104,7 @@ function receberTemperaturaContainers() {
     WHERE r.idRegistro = (
         SELECT MAX(idRegistro)
         FROM registroSensor
-        WHERE fkSensor = s.idSensor);
+        WHERE fkSensor = s.idSensor) AND c.fkEmpresa = ${fkEmpresa};
     ;
      `;
     console.log("Executando a instrução SQL: \n" + instrucao);

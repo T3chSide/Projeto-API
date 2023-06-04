@@ -80,11 +80,10 @@
     <p>&copy; 2023 FrostSide</p>
   </div>
 </body>
-<script src="./js/alerts.js"></script>
 
 <script>
 
-if (sessionStorage.TIPO_USUARIO == 'Administrador') {
+if (sessionStorage.TIPO_USUARIO == 'ADM') {
     bt_cadastro_user.style.display = 'block';
     bt_dashboard.style.display = 'block';
     bt_cadastro_lotes.style.display = 'block';
@@ -99,10 +98,6 @@ if (sessionStorage.TIPO_USUARIO == 'Administrador') {
   }
 
   var plotagensDados = 0
-
-  if (sessionStorage.TIPO_USUARIO == 'ADM') {
-    bt_cadastro.style.display = 'block';
-  }
 
   function listarEndereco(idEndereco) {
     fetch(`/endereco/listar/${idEndereco}`, { cache: 'no-store' }).then(function (response) {
@@ -123,10 +118,6 @@ if (sessionStorage.TIPO_USUARIO == 'Administrador') {
       .catch(function (error) {
         console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
       });
-  }
-
-  if (sessionStorage.TIPO_USUARIO == 'ADM') {
-    bt_cadastro.style.display = 'block';
   }
 
   function exibirDadosLote(idLote) {

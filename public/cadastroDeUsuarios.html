@@ -71,7 +71,7 @@
                             <input id="email" onkeyup="validar_email(this.value)">
                             <label>Nivel de Acesso: </label>
             <select id="tipo">
-              <option value="Administrador">Administrador</option>
+              <option value="ADM">Administrador</option>
               <option value="Supervisor">Supervisor</option>
               <option value="Padrão">Padrão</option>
             </select>
@@ -98,7 +98,7 @@
 
 <script>
 
-if (sessionStorage.TIPO_USUARIO == 'Administrador') {
+if (sessionStorage.TIPO_USUARIO == 'ADM') {
     bt_cadastro_user.style.display = 'block';
     bt_dashboard.style.display = 'block';
     bt_cadastro_lotes.style.display = 'block';
@@ -220,7 +220,7 @@ function validar_campos(nome, email, cpf, senha, conf_senha){
 
     function receberUsuarios() {
 
-fetch(`usuarios/receberUsuarios`).then(function (response) {
+fetch(`usuarios/listar/${sessionStorage.FK_EMPRESA}`).then(function (response) {
   if (response.ok) {
     response.json().then(function (resposta) {
       console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);

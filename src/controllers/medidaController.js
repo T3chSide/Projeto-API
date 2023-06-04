@@ -93,8 +93,7 @@ function receberContainers(req, res) {
 }
 
 function gerarDadosRandom(req, res) {
-    var fkEmpresa = req.params.fkEmpresa;
-    medidaModel.gerarDadosRandom(fkEmpresa).then(function (resultado) {
+    medidaModel.gerarDadosRandom().then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -108,7 +107,8 @@ function gerarDadosRandom(req, res) {
 }
 
 function receberTemperaturaContainers(req, res) {
-    medidaModel.receberTemperaturaContainers().then(function (resultado) {
+    var fkEmpresa = req.params.fkEmpresa
+    medidaModel.receberTemperaturaContainers(fkEmpresa).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
