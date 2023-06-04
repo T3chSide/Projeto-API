@@ -18,7 +18,7 @@
 <link rel="stylesheet"
   href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <link rel="icon" href="./assets/img/TechSide.png">
-<body onload="receberTemperaturaLotes();receberLotesAlerta()">
+<body onload="receberTemperaturaLotes(), receberLotesAlerta()">
 
   <div class="dashboard">
     <div class="menuLateral">
@@ -115,8 +115,8 @@
 
     var empresaVar = sessionStorage.FK_EMPRESA
 
-    fetch(`/medidas/receber-temperatura-lotes/`, {
-      method: "POST",
+    fetch(`/medidas/receber-temperatura-lotes`, {
+      method: "GET",
       headers: {
         "Content-Type": "application/json"
       }
@@ -219,13 +219,10 @@
     var empresaVar = sessionStorage.FK_EMPRESA
 
     fetch(`/medidas/receber-temperatura-lotes`, {
-      method: "POST",
+      method: "GET",
       headers: {
         "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        empresaServer: empresaVar,
-      })
+      }
     }).then(function (resposta) {
 
       if (resposta.ok) {
@@ -358,13 +355,10 @@ function atualizarGraficoStatus(dados, myChart) {
   var empresaVar = sessionStorage.FK_EMPRESA
 
     fetch(`/medidas/receber-temperatura-lotes`, {
-      method: "POST",
+      method: "GET",
       headers: {
         "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        empresaServer: empresaVar,
-      })
+      }
     }).then(function (resposta) {
 
       if (resposta.ok) {
@@ -416,16 +410,6 @@ function atualizarGraficoStatus(dados, myChart) {
     })
 
     }
-
-/*
-    function atualizarAlerts(){
-      buscarMedidasEmTempoReal(1);
-      buscarMedidasEmTempoReal(2);
-      buscarMedidasEmTempoReal(3);
-      buscarMedidasEmTempoReal(4);
-      setTimeout(atualizarAlerts, 5000);
-    }    
-*/
 
 
 </script>

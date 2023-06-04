@@ -93,7 +93,6 @@ function receberContainers(req, res) {
 }
 
 function receberTemperaturaContainers(req, res) {
-
     medidaModel.receberTemperaturaContainers().then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);

@@ -1,3 +1,5 @@
+
+
 var alertas = [];
 
 
@@ -7,17 +9,14 @@ var alertas = [];
 //     }
 // }
 
-function receberLotesAlerta() {
 
+function receberLotesAlerta() {
     fetch(`/medidas/receberTemperaturaContainers`).then(function (response) {
-        method: "GET"
-        headers: {
-            "Content-Type": "application/json"
-          }
       if (response.ok) {
         response.json().then(function (resposta) {
           console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
             alertar(resposta);
+             proximaAtualizacaoAlert = setTimeout(() =>{receberLotesAlerta()},2000);
         });
       } else {
         console.error('Nenhum dado encontrado ou erro na API');
@@ -51,14 +50,11 @@ function receberLotesAlerta() {
 // }
 
 function alertar(resposta) {
-    for(var i = 0; i < resposta,length; i++){
-        var idLote = resposta[i].temperatura;
+    for(var i = 0; i < resposta.length; i++){
+        var idLote = resposta[i].idContainer;
         var temp = resposta[i].temperatura;
-
-        console.log(idLote === resposta[i].fkEmpresa)
         
         var grauDeAviso ='';
-
 
         var limites = {
             muito_quente: 8,
@@ -130,6 +126,7 @@ function exibirCards() {
         alerta.innerHTML += transformarEmDiv(mensagem);
     }
 }
+
 
 function transformarEmDiv({ idLote, temp, grauDeAviso, grauDeAvisoCor }) {
     return `<div class="mensagem-alarme">
