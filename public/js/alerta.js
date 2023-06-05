@@ -26,28 +26,20 @@ function receberLotesAlerta() {
   }
 
 
-// function buscarMedidasEmTempoReal(idLote) {
-//   fetch(`/medidas/tempo-real/${idLote}`)
-//       .then(resposta => {
+  function mostrarModal(){
 
-//           if (resposta.ok) {
-//               resposta.json().then(resposta => {
-
-//                   console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-
-//                   alertar(resposta, idLote);
-//               });
-//           } else {
-
-//               console.error('Nenhum dado encontrado ou erro na API');
-//           }
-//       })
-//       .catch(function (error) {
-//           console.error(`Erro na obtenção dos dados do aquario p/ gráfico: ${error.message}`);
-//       });
-// }
+    var modalNotificacoes = document.getElementById("modalNotificacoes")
+  
+      if (modalNotificacoes.style.display == 'none') {
+          modalNotificacoes.style.display = `flex`
+      } else {
+          modalNotificacoes.style.display = 'none'
+      }
+  
+  }
 
 function alertar(resposta) {
+    var alertas = 0;
     for(var i = 0; i < resposta.length; i++){
         var idLote = resposta[i].idContainer;
         var temp = resposta[i].temperatura;
@@ -56,11 +48,12 @@ function alertar(resposta) {
 
         var limites = {
             muito_quente: 8,
-            quente: 7.5,
-            ideal: 5,
-            frio: 3.5,
+            quente: 7.9,
+            ideal: 6,
+            frio: 3.9,
             muito_frio: 2
         };
+
 
         var classe_temperatura = 'cor-alerta';
 
@@ -68,12 +61,14 @@ function alertar(resposta) {
             classe_temperatura = 'cor-alerta perigo-quente';
             grauDeAviso = 'a cima do ideal'
             grauDeAvisoCor = 'cor-alerta perigo-quente'
+            alertas += 1;
             exibirAlerta(temp, idLote, grauDeAviso, grauDeAvisoCor)
         }
         else if (temp < limites.muito_quente && temp >= limites.quente) {
             classe_temperatura = 'cor-alerta alerta-quente';
             grauDeAviso = 'em alerta quente'
             grauDeAvisoCor = 'cor-alerta alerta-quente'
+            alertas += 1;
             exibirAlerta(temp, idLote, grauDeAviso, grauDeAvisoCor)   
         }
         else if (temp < limites.quente && temp > limites.frio) {
@@ -84,16 +79,19 @@ function alertar(resposta) {
             classe_temperatura = 'cor-alerta alerta-frio';
             grauDeAviso = 'em alerta frio'
             grauDeAvisoCor = 'cor-alerta alerta-frio'
+            alertas += 1;
             exibirAlerta(temp, idLote, grauDeAviso, grauDeAvisoCor)
         }
         else if (temp <= limites.muito_frio) {
             classe_temperatura = 'cor-alerta perigo-frio';
             grauDeAviso = 'abaixo do ideal'
             grauDeAvisoCor = 'cor-alerta perigo-frio'
+            alertas += 1;
             exibirAlerta(temp, idLote, grauDeAviso, grauDeAvisoCor)
-            
         }
     }
+
+    contagemAlerts.innerHTML = alertas;
 }
 
 function exibirAlerta(temp, idLote, grauDeAviso, grauDeAvisoCor) {
@@ -119,10 +117,17 @@ function removerAlerta(idLote) {
 function exibirCards() {
     modalNotificacoes.innerHTML = '';
 
+    if(alertas.length>0){
+
     for (var i = 0; i < alertas.length; i++) {
         var mensagem = alertas[i];
         modalNotificacoes.innerHTML += transformarEmDiv(mensagem);
     }
+    modalNotificacoes.style.backgroundColor="#163170"
+}else{
+    modalNotificacoes.style.backgroundColor="#E6E8EA"
+}
+
 }
 
 
