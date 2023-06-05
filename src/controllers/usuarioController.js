@@ -96,7 +96,7 @@ function cadastrarUser(req, res) {
         res.status(400).send("O cpf está undefined!");
     }else if(tipo == undefined){
         res.status(400).send("O tipo está undefined!");
-    }else if(tipo == 'ADM'){
+    }else if(tipo == 'Administrador'){
         var cnpj = req.body.cnpjServer;
         if(cnpj == undefined){
             res.status(400).send("O cnpj está undefined!");
