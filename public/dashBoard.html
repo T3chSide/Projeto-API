@@ -20,7 +20,7 @@
   href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <link rel="icon" href="./assets/img/TechSide.png">
 
-<body onload="receberTemperaturaLotes(),gerarDadosRandom(),receberLotesAlerta()">
+<body onload="receberTemperaturaLotes(),receberLotesAlerta()//,gerarDadosRandom()">
 
   <div class="dashboard">
 
@@ -48,11 +48,15 @@
 
       <div class="header">
         <div class="leftHeader">
-          <img onclick="mostrarModal()" src="./assets/img/packard-bell.png" alt="">
+          <i class="fa-solid fa-bell fa-beat"onclick="mostrarModal()"></i>
         </div>
         <a class="lista" href="https://app.pipefy.com/public/form/8Inv0OlJ">
           <i class="fa-solid fa-headset" style="color: black;"></i>
         </a>
+      </div>
+
+      <div id="modalQntdNotificacoes">
+        <span id="contagemAlerts"></span>
       </div>
 
       <div id="modalNotificacoes">
@@ -465,15 +469,5 @@
         console.log(erro);
       });
   }
-
-function mostrarModal(){
-  var modalNotificacoes = document.getElementById("modalNotificacoes")
-
-    if (modalNotificacoes.style.display == 'none') {
-        modalNotificacoes.style.display = `flex`
-    } else {
-        modalNotificacoes.style.display = 'none'
-    }
-}
 
 </script>
