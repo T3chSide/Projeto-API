@@ -133,13 +133,6 @@
     var fkEmpresa = sessionStorage.FK_EMPRESA
 
     fetch(`/medidas/receber-temperatura-lotes/${fkEmpresa}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        empresaServer: fkEmpresa,
-      })
     }).then(function (resposta) {
 
       if (resposta.ok) {
@@ -238,14 +231,7 @@
 
     var fkEmpresa = sessionStorage.FK_EMPRESA
 
-    fetch(`/medidas/receber-temperatura-lotes/${fkEmpresa}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        empresaServer: fkEmpresa,
-      })
+    fetch(`/medidas/receber-temperatura-lotes/${fkEmpresa}`, {  
     }).then(function (resposta) {
 
       if (resposta.ok) {
@@ -416,13 +402,6 @@
     var fkEmpresa = sessionStorage.FK_EMPRESA;
 
     fetch(`/medidas/receber-temperatura-lotes/${fkEmpresa}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        empresaServer: fkEmpresa,
-      })
     })
       .then(function (resposta) {
         if (resposta.ok) {

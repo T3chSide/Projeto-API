@@ -88,26 +88,9 @@
     <p>&copy; 2023 FrostSide</p>
   </div>
 </body>
-<script src="./js/alerts.js"></script>
+
 
 <script>
-
-if (sessionStorage.TIPO_USUARIO == 'Administrador'||sessionStorage.TIPO_USUARIO == 'ADM') {
-    bt_cadastro_user.style.display = 'block';
-    bt_dashboard.style.display = 'block';
-    bt_cadastro_lotes.style.display = 'block';
-    bt_consulta.style.display = 'block';
-  } else if (sessionStorage.TIPO_USUARIO == 'Supervisor') {
-    bt_dashboard.style.display = 'block';
-    bt_cadastro_lotes.style.display = 'block';
-    bt_consulta.style.display = 'block';
-  } else {
-    const botaoLote = document.getElementsByClassName('botaoLote');
-    botaoLote.style.display = 'none'
-    bt_consulta.style.display = 'block';
-    bt_dashboard.style.display = 'block';
-  }
-
   var plotagensDados = 0
 
   function listarEndereco(idEndereco) {
@@ -131,10 +114,6 @@ if (sessionStorage.TIPO_USUARIO == 'Administrador'||sessionStorage.TIPO_USUARIO 
       });
   }
 
-  if (sessionStorage.TIPO_USUARIO == 'ADM') {
-    bt_cadastro.style.display = 'block';
-  }
-
   function exibirDadosLote(idLote) {
     fetch(`/container/listar/${idLote}`, { cache: 'no-store' }).then(function (response) {
       if (response.ok) {
@@ -143,7 +122,12 @@ if (sessionStorage.TIPO_USUARIO == 'Administrador'||sessionStorage.TIPO_USUARIO 
           console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
           resposta.reverse();
 
-          span_tipo.innerHTML = resposta[0].tipoContainer;
+          if(resposta[0].tipoContainer=='caminhao'){
+            span_tipo.innerHTML = 'Transporte'
+          }else{
+            span_tipo.innerHTML = 'Armazenamento'
+          }
+
           span_data.innerHTML = resposta[0].dtHoraInicio.substring(0, 10);
           span_qtd_vacinas.innerHTML = resposta[0].qtdvacinas;
 
@@ -232,6 +216,26 @@ if (sessionStorage.TIPO_USUARIO == 'Administrador'||sessionStorage.TIPO_USUARIO 
       var registro = resposta[i];
       labels.push(registro.momento_grafico);
       dados.datasets[0].data.push(registro.temperatura);
+
+      const temperatura = registro.temperatura;
+
+if (temperatura >= 4 && temperatura <= 6) {
+  dados.datasets[0].borderColor = '#52f90d';
+  dados.datasets[0].label = 'Temperatura ideal'
+} else if (
+  (temperatura >= 2.1 && temperatura <= 3.9) ||
+  (temperatura >= 6.1 && temperatura <= 7.9)
+) {
+  dados.datasets[0].borderColor = '#c7a941';
+  dados.datasets[0].label = 'Temperatura em alerta'
+} else if (temperatura > 8) {
+  dados.datasets[0].borderColor = '#c60a14';
+  dados.datasets[0].label = 'Temperatura excedida'
+}else {
+  dados.datasets[0].borderColor = '#c60a14';
+  dados.datasets[0].label = 'Temperatura abaixo'
+}
+
     }
 
     console.log('----------------------------------------------')
@@ -363,9 +367,27 @@ if (sessionStorage.TIPO_USUARIO == 'Administrador'||sessionStorage.TIPO_USUARIO 
           </div>
     `
       }
-
+      if (sessionStorage.TIPO_USUARIO == 'Administrador'||sessionStorage.TIPO_USUARIO == 'ADM') {
+    bt_cadastro_user.style.display = 'block';
+    bt_dashboard.style.display = 'block';
+    bt_cadastro_lotes.style.display = 'block';
+    bt_consulta.style.display = 'block';
+  } else if (sessionStorage.TIPO_USUARIO == 'Supervisor') {
+    bt_dashboard.style.display = 'block';
+    bt_cadastro_lotes.style.display = 'block';
+    bt_consulta.style.display = 'block';
+  } else if (sessionStorage.TIPO_USUARIO == 'Padrão'){
+    const botaoLote = document.getElementsByClassName('botaoMudarLote');
+    for(var posicao = 0; posicao < botaoLote.length;posicao++){
+      botaoLote[posicao].style.display = 'none'
+    }
+    bt_consulta.style.display = 'block';
+    bt_dashboard.style.display = 'block';
+  }
     }
   }
+
+  
 
   function mudarTipoArmazenamento(idContainer){{
       var idContainerT = idContainer      

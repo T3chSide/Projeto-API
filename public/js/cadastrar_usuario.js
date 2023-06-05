@@ -21,7 +21,7 @@ function cadastrar() {
             emailServer: email,
             senhaServer: senha,
             cnpjServer: sessionStorage.CNPJ_EMPRESA,
-            tipoServer: 'ADM',
+            tipoServer: 'Administrador',
             cpfServer: cpf
         })
     }).then(function (resposta) {

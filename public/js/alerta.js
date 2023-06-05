@@ -66,13 +66,13 @@ function alertar(resposta) {
 
         if (temp >= limites.muito_quente) {
             classe_temperatura = 'cor-alerta perigo-quente';
-            grauDeAviso = 'excedida'
+            grauDeAviso = 'a cima do ideal'
             grauDeAvisoCor = 'cor-alerta perigo-quente'
             exibirAlerta(temp, idLote, grauDeAviso, grauDeAvisoCor)
         }
         else if (temp < limites.muito_quente && temp >= limites.quente) {
             classe_temperatura = 'cor-alerta alerta-quente';
-            grauDeAviso = 'em alerta'
+            grauDeAviso = 'em alerta quente'
             grauDeAvisoCor = 'cor-alerta alerta-quente'
             exibirAlerta(temp, idLote, grauDeAviso, grauDeAvisoCor)   
         }
@@ -82,7 +82,7 @@ function alertar(resposta) {
         }
         else if (temp <= limites.frio && temp > limites.muito_frio) {
             classe_temperatura = 'cor-alerta alerta-frio';
-            grauDeAviso = 'em alerta'
+            grauDeAviso = 'em alerta frio'
             grauDeAvisoCor = 'cor-alerta alerta-frio'
             exibirAlerta(temp, idLote, grauDeAviso, grauDeAvisoCor)
         }
