@@ -176,6 +176,7 @@ a:hover {
   width: 12%;
   height: 30%;
   border-radius: 50%;
+  border: solid black 1px;
   display: inline-block;
 }
 
@@ -738,13 +739,13 @@ margin: 20px 0 20px 0;
   display: none;
     flex-direction: column;
     background-color: #163170;
-    border-radius: 10px;
+    border-radius: 17px;
     border-top-left-radius: 0;
     position: absolute;
     padding: 10px;
     z-index: 2;
     width: fit-content;
-    height: 200px;
+    height: 410px;
     overflow-y: auto;
     top: 6%;
     left: 2.5%;
