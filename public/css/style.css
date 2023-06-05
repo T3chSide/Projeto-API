@@ -394,7 +394,7 @@ body{
 .footer{
     display: flex;
     width: 100%;
-    background-color: black;
+    background-color:   background-color: #050c1b;;
     flex-direction: column;
     height: 150px;
     padding-top: 40px;
